@@ -15,8 +15,14 @@ def create_gui(last_char):
         global root
         root = tk.Tk()
         global label
-        helv36 = font.Font(family='Helvetica', size=36, weight='bold')
+        helv36 = font.Font(family='Helvetica', size=30, weight='bold')
         label = tk.Label(root, font = helv36)
+
+        # get screen width and height
+        ws = root.winfo_screenwidth()  # width of the screen
+        hs = root.winfo_screenheight()  # height of the screen
+
+        root.geometry('+%d+%d' % (50, 50))
 
     text = label.cget("text")
     text += last_char.lower()
@@ -24,12 +30,12 @@ def create_gui(last_char):
     label.config(text=text)
 
     root.overrideredirect(True)
-    root.geometry("+250+250")
+    #root.geometry("+250+250")
     root.lift()
     root.wm_attributes("-topmost", True)
     root.wm_attributes("-disabled", True)
     root.wm_attributes("-transparentcolor", "white")
-    root.attributes("-alpha", 0.9)
+    root.attributes("-alpha", 0.7)
     label.pack()
     root.mainloop()
 
