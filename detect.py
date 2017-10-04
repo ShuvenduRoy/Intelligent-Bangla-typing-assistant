@@ -1,10 +1,11 @@
 # importing packages
 import pythoncom, pyHook
+
 try:
     import tkinter as tk
     import tkinter.ttk as ttk
     import tkinter.font as font
-except ImportError: # Python 2
+except ImportError:  # Python 2
     import Tkinter as tk
     import ttk
     import tkFont as font
@@ -16,7 +17,7 @@ def create_gui(last_char):
         root = tk.Tk()
         global label
         helv36 = font.Font(family='Helvetica', size=30, weight='bold')
-        label = tk.Label(root, font = helv36)
+        label = tk.Label(root, font=helv36)
 
         # get screen width and height
         ws = root.winfo_screenwidth()  # width of the screen
@@ -30,7 +31,7 @@ def create_gui(last_char):
     label.config(text=text)
 
     root.overrideredirect(True)
-    #root.geometry("+250+250")
+    # root.geometry("+250+250")
     root.lift()
     root.wm_attributes("-topmost", True)
     root.wm_attributes("-disabled", True)
@@ -41,11 +42,10 @@ def create_gui(last_char):
 
 
 def process_input(last_char):
-    if len(last_char)==1:
+    if len(last_char) == 1:
         create_gui(last_char)
-    elif last_char=="Space":
+    elif last_char == "Space":
         create_gui(" ")
-
 
 
 def OnKeyboardEvent(event):
@@ -65,8 +65,9 @@ def OnKeyboardEvent(event):
     # print('---')
     process_input(event.Key)
 
-# return True to pass the event to other handlers
+    # return True to pass the event to other handlers
     return True
+
 
 # create a hook manager
 hm = pyHook.HookManager()
@@ -76,5 +77,3 @@ hm.KeyDown = OnKeyboardEvent
 hm.HookKeyboard()
 # wait forever
 pythoncom.PumpMessages()
-
-root = tk.Tk()
