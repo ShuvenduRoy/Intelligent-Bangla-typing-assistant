@@ -1,7 +1,13 @@
 # importing packages
 import pythoncom, pyHook
-import tkinter as tk
-import tkinter.font as font
+try:
+    import tkinter as tk
+    import tkinter.ttk as ttk
+    import tkinter.font as font
+except ImportError: # Python 2
+    import Tkinter as tk
+    import ttk
+    import tkFont as font
 
 
 def create_gui(last_char):
