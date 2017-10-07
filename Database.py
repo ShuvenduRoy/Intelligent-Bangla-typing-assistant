@@ -34,7 +34,32 @@ class database_handler():
             execution_string = "insert into history VALUES ('%s')" % string
             cur.execute(execution_string)
 
+    @staticmethod
+    def get_all_history():
+        con = database_handler.connect()
+        with con:
+            cur = con.cursor()
+            cur.execute("select * from history")
+            con.commit()
+
+            row = cur.fetchall()
+            data = list(row)
+
+        return data
 
 
-conn = database_handler.connect()
-database_handler.insert_sentence("this is a test")
+    @staticmethod
+    def string_strart_with(string):
+        con = database_handler.connect()
+        with con:
+            cur = con.cursor()
+            execution_string = "select data from history where data like '"+string+"%'"
+            cur.execute(execution_string)
+            con.commit()
+
+            row = cur.fetchone()
+
+        return row
+
+
+print(database_handler.string_strart_with("this is t"))
