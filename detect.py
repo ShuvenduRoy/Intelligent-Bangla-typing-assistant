@@ -11,7 +11,20 @@ except ImportError:  # Python 2
     import tkFont as font
 
 
+def create_variables():
+    """Create all the variables needed"""
+
+    # store current word, break with 'Space'
+    global current_word
+    current_word = ""
+
+    # Store current sentence, break with 'Return' or '.'
+    global current_sentence
+    current_sentence = ""
+
+
 def create_gui():
+    """ Create GUI window to show suggesting"""
     global root
     root = tk.Tk()
     global label
@@ -37,11 +50,17 @@ def show_typing(last_char):
     """append the input right after what was typed before"""
     if 'root' not in globals():
         create_gui()
+        create_variables()
 
+    # Show any character
     if len(last_char) == 1:
         last_char = last_char
+
+    # Set 'Space' = ' '
     elif last_char == "Space":
         last_char = " "
+
+    # Do nothing for other long input like 'Shitf', 'Ctrl'
     else:
         return
 
@@ -56,6 +75,8 @@ def show_typing(last_char):
 
 def process_keypress(last_char):
     """Handle user keypress according to settings"""
+
+    # show the typing
     show_typing(last_char)
 
 
