@@ -34,8 +34,16 @@ def create_gui():
 
 
 def show_typing(last_char):
+    """append the input right after what was typed before"""
     if 'root' not in globals():
         create_gui()
+
+    if len(last_char) == 1:
+        last_char = last_char
+    elif last_char == "Space":
+        last_char = " "
+    else:
+        return
 
     text = label.cget("text")
     text += last_char.lower()
@@ -47,10 +55,8 @@ def show_typing(last_char):
 
 
 def process_keypress(last_char):
-    if len(last_char) == 1:
-        show_typing(last_char)
-    elif last_char == "Space":
-        show_typing(" ")
+    """Handle user keypress according to settings"""
+    show_typing(last_char)
 
 
 def OnKeyboardEvent(event):
