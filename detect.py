@@ -45,7 +45,7 @@ def show_typing(last_char):
         last_char = last_char
 
     # Set 'Space' = ' '
-    elif last_char == "Space":
+    elif last_char == "space":
         last_char = " "
 
     # Do nothing for other long input like 'Shitf', 'Ctrl'
@@ -84,8 +84,9 @@ def process_keypress(last_char):
         global current_word
         current_word = ""
 
-    if last_char=='.' or last_char=='Return' or last_char=='?':
+    if last_char=='.' or last_char=='return' or last_char=='?':
         database_handler.insert_sentence(current_sentence)
+
 
     current_sentence += last_char
     print(current_sentence)
