@@ -86,10 +86,19 @@ def process_keypress(last_char):
 
     if last_char=='.' or last_char=='return' or last_char=='?':
         database_handler.insert_sentence(current_sentence)
+        current_sentence = ""
+        current_word = ""
 
+    elif last_char=='space':
+        current_word = ""
+        current_sentence += " "
 
-    current_sentence += last_char
-    print(current_sentence)
+    else:
+        current_sentence += last_char
+        current_word += last_char
+
+    # print(current_sentence)
+    # print(current_word)
 
     # show the typing
     show_typing(last_char)
