@@ -62,4 +62,5 @@ class database_handler():
         return row
 
 
-print(database_handler.string_strart_with("this is t"))
+# print(database_handler.string_strart_with("A"))
+

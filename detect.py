@@ -12,18 +12,6 @@ except ImportError:  # Python 2
     import tkFont as font
 
 
-def create_variables():
-    """Create all the variables needed"""
-
-    # store current word, break with 'Space'
-    global current_word
-    current_word = ""
-
-    # Store current sentence, break with 'Return' or '.'
-    global current_sentence
-    current_sentence = ""
-
-
 def create_gui():
     """ Create GUI window to show suggesting"""
     global root
@@ -51,7 +39,6 @@ def show_typing(last_char):
     """append the input right after what was typed before"""
     if 'root' not in globals():
         create_gui()
-        create_variables()
 
     # Show any character
     if len(last_char) == 1:
@@ -79,7 +66,6 @@ def show(string):
 
     if 'root' not in globals():
         create_gui()
-        create_variables()
 
     label.config(text = string)
 
@@ -89,9 +75,25 @@ def show(string):
 
 def process_keypress(last_char):
     """Handle user keypress according to settings"""
+    last_char = str.lower(last_char)
+
+    if 'current_sentence' not in globals():
+        global current_sentence
+        current_sentence = ""
+
+        global current_word
+        current_word = ""
+
+    if last_char=='.' or last_char=='Return':
+        database_handler.insert_sentence(current_sentence)
+
+    current_sentence += last_char
+    print(current_sentence)
 
     # show the typing
     show_typing(last_char)
+
+
 
 
 def OnKeyboardEvent(event):
