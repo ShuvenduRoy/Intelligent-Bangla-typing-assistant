@@ -84,7 +84,7 @@ def process_keypress(last_char):
         global current_word
         current_word = ""
 
-    if last_char=='.' or last_char=='Return':
+    if last_char=='.' or last_char=='Return' or last_char=='?':
         database_handler.insert_sentence(current_sentence)
 
     current_sentence += last_char
