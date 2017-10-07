@@ -11,24 +11,18 @@ except ImportError:  # Python 2
     import tkFont as font
 
 
-def create_gui(last_char):
-    if 'root' not in globals():
-        global root
-        root = tk.Tk()
-        global label
-        helv36 = font.Font(family='Helvetica', size=30, weight='bold')
-        label = tk.Label(root, font=helv36)
+def create_gui():
+    global root
+    root = tk.Tk()
+    global label
+    helv36 = font.Font(family='Helvetica', size=30, weight='bold')
+    label = tk.Label(root, font=helv36)
 
-        # get screen width and height
-        ws = root.winfo_screenwidth()  # width of the screen
-        hs = root.winfo_screenheight()  # height of the screen
+    # get screen width and height
+    ws = root.winfo_screenwidth()  # width of the screen
+    hs = root.winfo_screenheight()  # height of the screen
 
-        root.geometry('+%d+%d' % (50, 50))
-
-    text = label.cget("text")
-    text += last_char.lower()
-
-    label.config(text=text)
+    root.geometry('+%d+%d' % (50, 50))
 
     root.overrideredirect(True)
     # root.geometry("+250+250")
@@ -37,15 +31,26 @@ def create_gui(last_char):
     root.wm_attributes("-disabled", True)
     root.wm_attributes("-transparentcolor", "white")
     root.attributes("-alpha", 0.7)
+
+
+def show_typing(last_char):
+    if 'root' not in globals():
+        create_gui()
+
+    text = label.cget("text")
+    text += last_char.lower()
+
+    label.config(text=text)
+
     label.pack()
     root.mainloop()
 
 
-def process_input(last_char):
+def process_keypress(last_char):
     if len(last_char) == 1:
-        create_gui(last_char)
+        show_typing(last_char)
     elif last_char == "Space":
-        create_gui(" ")
+        show_typing(" ")
 
 
 def OnKeyboardEvent(event):
@@ -63,7 +68,7 @@ def OnKeyboardEvent(event):
     # print('Alt', event.Alt)
     # print('Transition', event.Transition)
     # print('---')
-    process_input(event.Key)
+    process_keypress(event.Key)
 
     # return True to pass the event to other handlers
     return True
