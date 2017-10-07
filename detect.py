@@ -90,18 +90,29 @@ def process_keypress(last_char):
         current_word = ""
 
     elif last_char == 'space':
+        # get from database
+        word = database_handler.string_strart_with(current_sentence)
+
+        # update current
         current_word = ""
         current_sentence += " "
+
+        # show it
+        if word is not None:
+            show(word[0])
+
+
 
     else:
         current_sentence += last_char
         current_word += last_char
 
     # print(current_sentence)
-    # print(current_word)
+    print("sentence: ", current_sentence)
+    print("word: ", current_word)
 
     # show the typing
-    show_typing(last_char)
+    # show_typing(last_char)
 
 
 def OnKeyboardEvent(event):

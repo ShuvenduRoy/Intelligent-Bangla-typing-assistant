@@ -63,4 +63,5 @@ class database_handler():
 
 
 # print(database_handler.string_strart_with("A"))
+# print(database_handler.get_all_history())
 
