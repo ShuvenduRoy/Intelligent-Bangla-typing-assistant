@@ -67,7 +67,7 @@ def show(string):
     if 'root' not in globals():
         create_gui()
 
-    label.config(text = string)
+    label.config(text=string)
 
     label.pack()
     root.mainloop()
@@ -84,12 +84,12 @@ def process_keypress(last_char):
         global current_word
         current_word = ""
 
-    if last_char=='.' or last_char=='return' or last_char=='?':
+    if last_char == '.' or last_char == 'return' or last_char == '?':
         database_handler.insert_sentence(current_sentence)
         current_sentence = ""
         current_word = ""
 
-    elif last_char=='space':
+    elif last_char == 'space':
         current_word = ""
         current_sentence += " "
 
@@ -102,8 +102,6 @@ def process_keypress(last_char):
 
     # show the typing
     show_typing(last_char)
-
-
 
 
 def OnKeyboardEvent(event):
