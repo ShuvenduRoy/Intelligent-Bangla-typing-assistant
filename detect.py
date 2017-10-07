@@ -73,6 +73,19 @@ def show_typing(last_char):
     root.mainloop()
 
 
+def show(string):
+    """ show the string in gui"""
+
+    if 'root' not in globals():
+        create_gui()
+        create_variables()
+
+    label.config(text = string)
+
+    label.pack()
+    root.mainloop()
+
+
 def process_keypress(last_char):
     """Handle user keypress according to settings"""
 
