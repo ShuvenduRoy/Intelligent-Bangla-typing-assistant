@@ -1,5 +1,6 @@
 # importing packages
 import pythoncom, pyHook
+import os
 from Database import database_handler
 
 try:
@@ -86,6 +87,14 @@ def find_from_history_given_words(current_sentence):
         show(word[0])
 
 
+def predict_with_lstm(current_sentence):
+    result = os.popen('python sample.py --save_dir save --prime "' + current_sentence + '"').read()
+    word = result.split("\n")[0].split(" ")[len(current_sentence.split(" "))-1]
+
+    if word is not None:
+        show(word)
+
+
 def process_keypress(last_char):
     """Handle user keypress according to settings"""
     last_char = str.lower(last_char)
@@ -106,7 +115,16 @@ def process_keypress(last_char):
 
     # Detect end of word
     elif last_char == 'space':
-        find_from_history_given_words(current_sentence)
+        # update current
+        current_word = ""
+        current_sentence += " "
+
+        # functionality 1: Direct find sentence from history
+        #find_from_history_given_words(current_sentence)
+
+        # functionality 2: use LSTM to suggest next word
+        predict_with_lstm(current_sentence)
+
 
 
     else:
