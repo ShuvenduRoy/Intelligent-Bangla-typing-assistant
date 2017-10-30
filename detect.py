@@ -1,4 +1,14 @@
 # importing packages
+from __future__ import print_function
+import tensorflow as tf
+
+import argparse
+import os
+from six.moves import cPickle
+
+from model import Model
+
+from six import text_type
 import pythoncom, pyHook
 import os
 from Database import database_handler
@@ -87,12 +97,27 @@ def find_from_history_given_words(current_sentence):
         show(word[0])
 
 
-def predict_with_lstm(current_sentence):
+def predict_with_lstm_in_shell(current_sentence):
     result = os.popen('python sample.py --save_dir save --prime "' + current_sentence + '"').read()
     word = result.split("\n")[0].split(" ")[len(current_sentence.split(" "))-1]
 
     if word is not None:
         show(word)
+
+
+def predict_with_lstm(current_sentence):
+    with tf.Session() as sess:
+        tf.global_variables_initializer().run()
+        saver = tf.train.Saver(tf.global_variables())
+        ckpt = tf.train.get_checkpoint_state("save")
+        if ckpt and ckpt.model_checkpoint_path:
+            saver.restore(sess, ckpt.model_checkpoint_path)
+            result = str((model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8')))
+
+            word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
+
+            if word is not None:
+                show(word)
 
 
 def process_keypress(last_char):
@@ -106,6 +131,15 @@ def process_keypress(last_char):
 
         global current_word
         current_word = ""
+
+        global saved_args, chars, vocab, model
+
+        with open(os.path.join("save", 'config.pkl'), 'rb') as f:
+            saved_args = cPickle.load(f)
+        with open(os.path.join("save", 'chars_vocab.pkl'), 'rb') as f:
+            chars, vocab = cPickle.load(f)
+
+        model = Model(saved_args, training=False)
 
     # detect end of sentence
     if last_char == '.' or last_char == 'return' or last_char == '?':
