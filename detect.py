@@ -5,9 +5,7 @@ import tensorflow as tf
 import argparse
 import os
 from six.moves import cPickle
-
 from model import Model
-
 from six import text_type
 import pythoncom, pyHook
 import os
@@ -153,7 +151,6 @@ def process_keypress(last_char):
         current_word = current_word[:-1]
         current_sentence = current_sentence[:-1]
 
-
     # Detect end of word
     elif last_char == 'space':
         # update current
@@ -161,7 +158,7 @@ def process_keypress(last_char):
         current_sentence += " "
 
         # functionality 1: Direct find sentence from history
-        #find_from_history_given_words(current_sentence)
+        # find_from_history_given_words(current_sentence)
 
         # functionality 2: use LSTM to suggest next word
         predict_with_lstm(current_sentence)
@@ -170,14 +167,13 @@ def process_keypress(last_char):
     elif len(last_char) > 1:
         pass
 
-
     else:
         current_sentence += last_char
         current_word += last_char
 
     # print(current_sentence)
     print("sentence: ", current_sentence)
-    #print("word: ", current_word)
+    # print("word: ", current_word)
 
     # show the typing
     # show_typing(last_char)
