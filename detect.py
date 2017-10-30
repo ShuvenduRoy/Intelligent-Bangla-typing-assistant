@@ -73,10 +73,24 @@ def show(string):
     root.mainloop()
 
 
+def find_from_history_given_words(current_sentence):
+    # get from database
+    word = database_handler.string_strart_with(current_sentence)
+
+    # update current
+    current_word = ""
+    current_sentence += " "
+
+    # show it
+    if word is not None:
+        show(word[0])
+
+
 def process_keypress(last_char):
     """Handle user keypress according to settings"""
     last_char = str.lower(last_char)
 
+    # Initialize global variables
     if 'current_sentence' not in globals():
         global current_sentence
         current_sentence = ""
@@ -84,23 +98,15 @@ def process_keypress(last_char):
         global current_word
         current_word = ""
 
+    # detect end of sentence
     if last_char == '.' or last_char == 'return' or last_char == '?':
         database_handler.insert_sentence(current_sentence)
         current_sentence = ""
         current_word = ""
 
+    # Detect end of word
     elif last_char == 'space':
-        # get from database
-        word = database_handler.string_strart_with(current_sentence)
-
-        # update current
-        current_word = ""
-        current_sentence += " "
-
-        # show it
-        if word is not None:
-            show(word[0])
-
+        find_from_history_given_words(current_sentence)
 
 
     else:
