@@ -113,6 +113,7 @@ def predict_with_lstm(current_sentence):
         if ckpt and ckpt.model_checkpoint_path:
             saver.restore(sess, ckpt.model_checkpoint_path)
             result = str((model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8')))
+            print(result)
 
             word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
 
@@ -165,6 +166,9 @@ def process_keypress(last_char):
         # functionality 2: use LSTM to suggest next word
         predict_with_lstm(current_sentence)
 
+    # escape other keypress
+    elif len(last_char) > 1:
+        pass
 
 
     else:
@@ -173,7 +177,7 @@ def process_keypress(last_char):
 
     # print(current_sentence)
     print("sentence: ", current_sentence)
-    print("word: ", current_word)
+    #print("word: ", current_word)
 
     # show the typing
     # show_typing(last_char)
