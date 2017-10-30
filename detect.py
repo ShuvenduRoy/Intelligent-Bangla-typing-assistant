@@ -113,6 +113,12 @@ def process_keypress(last_char):
         current_sentence = ""
         current_word = ""
 
+    elif last_char == 'back':
+        # update current
+        current_word = current_word[:-1]
+        current_sentence = current_sentence[:-1]
+
+
     # Detect end of word
     elif last_char == 'space':
         # update current
