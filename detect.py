@@ -141,7 +141,7 @@ def process_keypress(last_char):
         model = Model(saved_args, training=False)
 
     # detect end of sentence
-    if last_char == '.' or last_char == 'return' or last_char == '?':
+    if last_char == 'Oem_Period' or last_char == 'return' or last_char == '?':
         database_handler.insert_sentence(current_sentence)
         current_sentence = ""
         current_word = ""
