@@ -117,11 +117,17 @@ def predict_with_lstm(current_sentence):
     #
     #         if word is not None:
     #             show(word)
+    # current_sentence = "একটি "
 
-    result = str((model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8')))
+    result = (model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8'))
+    # print(result)
+
+    result = result.decode("utf-8", "replace")
     print(result)
 
-    word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
+    word = (result.split(" ")[(len(current_sentence.split(" "))) - 1])
+
+    # word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
 
     if word is not None:
         show(word)
