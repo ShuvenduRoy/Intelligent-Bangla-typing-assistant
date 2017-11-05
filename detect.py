@@ -118,17 +118,13 @@ def predict_with_lstm(current_sentence):
     #         if word is not None:
     #             show(word)
 
-    saver = tf.train.Saver(tf.global_variables())
-    ckpt = tf.train.get_checkpoint_state("save")
-    if ckpt and ckpt.model_checkpoint_path:
-        saver.restore(sess, ckpt.model_checkpoint_path)
-        result = str((model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8')))
-        print(result)
+    result = str((model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8')))
+    print(result)
 
-        word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
+    word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
 
-        if word is not None:
-            show(word)
+    if word is not None:
+        show(word)
 
 
 def process_keypress(last_char):
@@ -143,13 +139,7 @@ def process_keypress(last_char):
         global current_word
         current_word = ""
 
-        global saved_args, chars, vocab, model
-
-        global sess
-        sess = tf.Session()
-        sess.run(tf.global_variables_initializer())
-
-
+        global saved_args, chars, vocab, model, saver, ckpt
 
         with open(os.path.join("save", 'config.pkl'), 'rb') as f:
             saved_args = cPickle.load(f)
@@ -157,6 +147,15 @@ def process_keypress(last_char):
             chars, vocab = cPickle.load(f)
 
         model = Model(saved_args, training=False)
+
+        global sess
+        sess = tf.Session()
+        sess.run(tf.global_variables_initializer())
+
+        saver = tf.train.Saver(tf.global_variables())
+        ckpt = tf.train.get_checkpoint_state("save")
+        if ckpt and ckpt.model_checkpoint_path:
+            saver.restore(sess, ckpt.model_checkpoint_path)
 
     # detect end of sentence
     if last_char == 'Oem_Period' or last_char == 'return' or last_char == '?':
