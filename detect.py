@@ -104,19 +104,31 @@ def predict_with_lstm_in_shell(current_sentence):
 
 
 def predict_with_lstm(current_sentence):
-    with tf.Session() as sess:
-        tf.global_variables_initializer().run()
-        saver = tf.train.Saver(tf.global_variables())
-        ckpt = tf.train.get_checkpoint_state("save")
-        if ckpt and ckpt.model_checkpoint_path:
-            saver.restore(sess, ckpt.model_checkpoint_path)
-            result = str((model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8')))
-            print(result)
+    # with tf.Session() as sess:
+    #     tf.global_variables_initializer().run()
+    #     saver = tf.train.Saver(tf.global_variables())
+    #     ckpt = tf.train.get_checkpoint_state("save")
+    #     if ckpt and ckpt.model_checkpoint_path:
+    #         saver.restore(sess, ckpt.model_checkpoint_path)
+    #         result = str((model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8')))
+    #         print(result)
+    #
+    #         word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
+    #
+    #         if word is not None:
+    #             show(word)
 
-            word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
+    saver = tf.train.Saver(tf.global_variables())
+    ckpt = tf.train.get_checkpoint_state("save")
+    if ckpt and ckpt.model_checkpoint_path:
+        saver.restore(sess, ckpt.model_checkpoint_path)
+        result = str((model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8')))
+        print(result)
 
-            if word is not None:
-                show(word)
+        word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
+
+        if word is not None:
+            show(word)
 
 
 def process_keypress(last_char):
@@ -132,6 +144,12 @@ def process_keypress(last_char):
         current_word = ""
 
         global saved_args, chars, vocab, model
+
+        global sess
+        sess = tf.Session()
+        sess.run(tf.global_variables_initializer())
+
+
 
         with open(os.path.join("save", 'config.pkl'), 'rb') as f:
             saved_args = cPickle.load(f)
