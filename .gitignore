@@ -5,6 +5,8 @@ __pycache__/
 .idea/
 .idea/*
 
+test.db
+
 
 # C extensions
 *.so
