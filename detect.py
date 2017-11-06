@@ -117,6 +117,7 @@ def predict_with_lstm(current_sentence):
     #
     #         if word is not None:
     #             show(word)
+
     # current_sentence = "একটি "
 
     result = (model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8'))
@@ -147,9 +148,11 @@ def process_keypress(last_char):
 
         global saved_args, chars, vocab, model, saver, ckpt
 
-        with open(os.path.join("save", 'config.pkl'), 'rb') as f:
+        saved_model_path = "save/english"
+
+        with open(os.path.join(saved_model_path, 'config.pkl'), 'rb') as f:
             saved_args = cPickle.load(f)
-        with open(os.path.join("save", 'chars_vocab.pkl'), 'rb') as f:
+        with open(os.path.join(saved_model_path, 'chars_vocab.pkl'), 'rb') as f:
             chars, vocab = cPickle.load(f)
 
         model = Model(saved_args, training=False)
@@ -159,7 +162,7 @@ def process_keypress(last_char):
         sess.run(tf.global_variables_initializer())
 
         saver = tf.train.Saver(tf.global_variables())
-        ckpt = tf.train.get_checkpoint_state("save")
+        ckpt = tf.train.get_checkpoint_state(saved_model_path)
         if ckpt and ckpt.model_checkpoint_path:
             saver.restore(sess, ckpt.model_checkpoint_path)
 
