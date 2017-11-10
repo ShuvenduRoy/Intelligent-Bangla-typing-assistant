@@ -183,7 +183,7 @@ def process_keypress(last_char):
             saver.restore(sess, ckpt.model_checkpoint_path)
 
     # detect end of sentence
-    if last_char == 'Oem_Period' or last_char == 'return' or last_char == '?':
+    if last_char == 'oem_period' or last_char == 'return' or last_char == '?':
         if enabled_language == "bangla":
             current_bangla_sentence = BanglaPhoneticParser.parse(current_sentence)
             database_handler.insert_sentence(current_bangla_sentence)
@@ -247,7 +247,7 @@ def OnKeyboardEvent(event):
     # print('Window:',event.Window)
     # print('WindowName:',event.WindowName)
     # print('Ascii:', event.Ascii, chr(event.Ascii))
-    # print('Key:', event.Key)
+    print('Key:', event.Key)
     # print('KeyID:', event.KeyID)
     # print('ScanCode:', event.ScanCode)
     # print('Extended:', event.Extended)
