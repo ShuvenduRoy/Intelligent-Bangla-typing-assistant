@@ -122,8 +122,8 @@ def predict_with_lstm(current_sentence):
     # current_sentence = "একটি "
 
     # Changing model for bangla
-    if enabled_language == "bangla":
-        current_sentence = BanglaPhoneticParser.parse(current_sentence)
+    # if enabled_language == "bangla":
+    #     current_sentence = BanglaPhoneticParser.parse(current_sentence)
 
     result = (model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8'))
     # print(result)
@@ -145,8 +145,9 @@ def process_keypress(last_char):
 
     # Initialize global variables
     if 'current_sentence' not in globals():
-        global current_sentence
+        global current_sentence, current_bangla_sentence
         current_sentence = ""
+        current_bangla_sentence = ""
 
         global current_word
         current_word = ""
@@ -216,6 +217,11 @@ def process_keypress(last_char):
 
     # show the typing
     # show_typing(last_char)
+
+    # Convert if it bangla is enabled
+    if enabled_language == "bangla":
+        current_bangla_sentence = BanglaPhoneticParser.parse(current_sentence)
+        show(current_bangla_sentence)
 
 
 def OnKeyboardEvent(event):
