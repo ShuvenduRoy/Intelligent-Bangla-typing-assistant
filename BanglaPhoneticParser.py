@@ -279,6 +279,6 @@ class BanglaPhoneticParser:
 # 'z'] letter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
 # 'U','V', 'W', 'X', 'Y', 'Z'] for ch in letter: print(BanglaPhoneticParser.parse(ch))
 
-while True:
-    str = input()
-    print(BanglaPhoneticParser.parse(str))
+# while True:
+#     str = input()
+#     print(BanglaPhoneticParser.parse(str))
