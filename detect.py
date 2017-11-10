@@ -98,7 +98,7 @@ def find_from_history_given_words(current_sentence):
 
 def predict_with_lstm_in_shell(current_sentence):
     result = os.popen('python sample.py --save_dir save --prime "' + current_sentence + '"').read()
-    word = result.split("\n")[0].split(" ")[len(current_sentence.split(" "))-1]
+    word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
 
     if word is not None:
         show(word)
@@ -149,10 +149,10 @@ def process_keypress(last_char):
         current_sentence = ""
         current_bangla_sentence = ""
 
-
-        global current_word, current_bangla_word
+        global current_word, current_bangla_word, prev_char
         current_word = ""
         current_bangla_word = ""
+        prev_char = ""
 
         global saved_args, chars, vocab, model, saver, ckpt
 
@@ -197,9 +197,14 @@ def process_keypress(last_char):
 
     elif last_char == 'back':
         # update current
-        current_word = current_word[:-1]
-        current_sentence = current_sentence[:-1]
-        current_bangla_word = BanglaPhoneticParser.parse(current_word)
+        if len(current_word) > 1:
+            current_word = current_word[:-1]
+            current_sentence = current_sentence[:-1]
+            current_bangla_word = BanglaPhoneticParser.parse(current_word)
+        else:
+            current_word = ""
+            current_sentence = ""
+            current_bangla_word = ""
 
     # Detect end of word
     elif last_char == 'space':
@@ -223,13 +228,21 @@ def process_keypress(last_char):
         pass
 
     else:
+        if prev_char == 'lshift' or prev_char == 'rshift':
+            if 'a' <= last_char <= 'z':
+                last_char = last_char.upper()
+
+        # print(prev_char, last_char)
+
         current_sentence += last_char
         current_word += last_char
         if enabled_language == "bangla":
             current_bangla_word = BanglaPhoneticParser.parse(current_word)
 
     # print(current_sentence)
-    print("sentence: ", current_sentence, "   ", current_bangla_sentence)
+    print("current sentence: ", current_sentence, "   ", current_bangla_sentence)
+    print("current word    : ", current_word, "   ", current_bangla_word)
+    prev_char = last_char
     # print("word: ", current_word)
 
     # show the typing
@@ -247,7 +260,7 @@ def OnKeyboardEvent(event):
     # print('Window:',event.Window)
     # print('WindowName:',event.WindowName)
     # print('Ascii:', event.Ascii, chr(event.Ascii))
-    print('Key:', event.Key)
+    # print('Key:', event.Key)
     # print('KeyID:', event.KeyID)
     # print('ScanCode:', event.ScanCode)
     # print('Extended:', event.Extended)
