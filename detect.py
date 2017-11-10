@@ -118,7 +118,7 @@ def predict_with_lstm(current_sentence):
     #         if word is not None:
     #             show(word)
 
-    # current_sentence = "একটি "
+    current_sentence = "একটি "
 
     result = (model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8'))
     # print(result)
@@ -148,7 +148,7 @@ def process_keypress(last_char):
 
         global saved_args, chars, vocab, model, saver, ckpt
 
-        saved_model_path = "save/english"
+        saved_model_path = "save/bangla"
 
         with open(os.path.join(saved_model_path, 'config.pkl'), 'rb') as f:
             saved_args = cPickle.load(f)
