@@ -10,7 +10,7 @@ from six import text_type
 import pythoncom, pyHook
 import os
 from Database import database_handler
-import BanglaPhoneticParser
+from BanglaPhoneticParser import *
 
 try:
     import tkinter as tk
@@ -121,6 +121,10 @@ def predict_with_lstm(current_sentence):
 
     # current_sentence = "একটি "
 
+    # Changing model for bangla
+    if enabled_language == "bangla":
+        current_sentence = BanglaPhoneticParser.parse(current_sentence)
+
     result = (model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8'))
     # print(result)
 
@@ -155,7 +159,7 @@ def process_keypress(last_char):
         english_model_path = "save/english"
 
         # initialize with one language
-        enabled_language = "english"
+        enabled_language = "bangla"
 
         saved_model_path = bangla_model_path if enabled_language == "bangla" else english_model_path
 
