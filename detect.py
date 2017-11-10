@@ -149,8 +149,10 @@ def process_keypress(last_char):
         current_sentence = ""
         current_bangla_sentence = ""
 
-        global current_word
+
+        global current_word, current_bangla_word
         current_word = ""
+        current_bangla_word = ""
 
         global saved_args, chars, vocab, model, saver, ckpt
 
@@ -182,26 +184,39 @@ def process_keypress(last_char):
 
     # detect end of sentence
     if last_char == 'Oem_Period' or last_char == 'return' or last_char == '?':
-        database_handler.insert_sentence(current_sentence)
+        if enabled_language == "bangla":
+            current_bangla_sentence = BanglaPhoneticParser.parse(current_sentence)
+            database_handler.insert_sentence(current_bangla_sentence)
+        else:
+            database_handler.insert_sentence(current_sentence)
+
         current_sentence = ""
+        current_bangla_sentence = ""
         current_word = ""
+        current_bangla_word = ""
 
     elif last_char == 'back':
         # update current
         current_word = current_word[:-1]
         current_sentence = current_sentence[:-1]
+        current_bangla_word = BanglaPhoneticParser.parse(current_word)
 
     # Detect end of word
     elif last_char == 'space':
         # update current
         current_word = ""
+        current_bangla_word = ""
         current_sentence += " "
 
         # functionality 1: Direct find sentence from history
         # find_from_history_given_words(current_sentence)
 
         # functionality 2: use LSTM to suggest next word
-        predict_with_lstm(current_sentence)
+        if enabled_language == "bangla":
+            current_bangla_sentence = BanglaPhoneticParser.parse(current_sentence)
+            predict_with_lstm(current_bangla_sentence)
+        else:
+            predict_with_lstm(current_sentence)
 
     # escape other keypress
     elif len(last_char) > 1:
@@ -210,9 +225,11 @@ def process_keypress(last_char):
     else:
         current_sentence += last_char
         current_word += last_char
+        if enabled_language == "bangla":
+            current_bangla_word = BanglaPhoneticParser.parse(current_word)
 
     # print(current_sentence)
-    print("sentence: ", current_sentence)
+    print("sentence: ", current_sentence, "   ", current_bangla_sentence)
     # print("word: ", current_word)
 
     # show the typing
@@ -220,8 +237,7 @@ def process_keypress(last_char):
 
     # Convert if it bangla is enabled
     if enabled_language == "bangla":
-        current_bangla_sentence = BanglaPhoneticParser.parse(current_sentence)
-        show(current_bangla_sentence)
+        show(current_bangla_word)
 
 
 def OnKeyboardEvent(event):
