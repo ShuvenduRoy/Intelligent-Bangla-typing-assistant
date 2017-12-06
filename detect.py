@@ -70,7 +70,8 @@ def create_gui():
 
     def myfunc(item):
         print(item)
-        # root.destroy()
+        root.destroy()
+        del globals()['root']
 
     buttonList[0] = Button(root, text=inputList[0], command=lambda: myfunc(inputList[0]), bd=0, activeforeground="blue",
                            justify=LEFT, width=10, height=2, padx=10)
