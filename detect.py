@@ -11,6 +11,7 @@ import pythoncom, pyHook
 import os
 from Database import database_handler
 from BanglaPhoneticParser import *
+from tkinter import *
 
 try:
     import tkinter as tk
@@ -24,25 +25,77 @@ except ImportError:  # Python 2
 
 def create_gui():
     """ Create GUI window to show suggesting"""
+    # global root
+    # root = tk.Tk()
+    # global label
+    # helv36 = font.Font(family='Helvetica', size=30, weight='bold')
+    # label = tk.Label(root, font=helv36)
+    #
+    # # get screen width and height
+    # ws = root.winfo_screenwidth()  # width of the screen
+    # hs = root.winfo_screenheight()  # height of the screen
+    #
+    # root.geometry('+%d+%d' % (50, 50))
+    #
+    # root.overrideredirect(True)
+    # # root.geometry("+250+250")
+    # root.lift()
+    # root.wm_attributes("-topmost", True)
+    # root.wm_attributes("-disabled", True)
+    # root.wm_attributes("-transparentcolor", "white")
+    # root.attributes("-alpha", 0.7)
+
     global root
-    root = tk.Tk()
-    global label
-    helv36 = font.Font(family='Helvetica', size=30, weight='bold')
-    label = tk.Label(root, font=helv36)
+    root = Tk()
+    # global label
+    # label = tk.Label(root)
 
-    # get screen width and height
-    ws = root.winfo_screenwidth()  # width of the screen
-    hs = root.winfo_screenheight()  # height of the screen
+    # Zodi button er text ta cas taile buttonList[0]['text'] likhle button er text ta diye dibe
 
-    root.geometry('+%d+%d' % (50, 50))
+    root.attributes('-fullscreen', False)
+    root.resizable(width=False, height=False)
 
-    root.overrideredirect(True)
-    # root.geometry("+250+250")
-    root.lift()
-    root.wm_attributes("-topmost", True)
-    root.wm_attributes("-disabled", True)
-    root.wm_attributes("-transparentcolor", "white")
-    root.attributes("-alpha", 0.7)
+    screen_width = int(root.winfo_screenwidth() * .40)
+    screen_height = int(root.winfo_screenheight() * .05)
+    screen_resolution = '0' + '0' + str(screen_width) + 'x' + str(screen_height)
+
+    root.geometry(screen_resolution)
+
+    # root.geometry("500x90+0+0")
+    global inputList
+    inputList = ['option 1', 'option 2', 'option 3', 'option 4', 'option 5', 'option 6']
+
+    global buttonList
+    buttonList = [None] * (len(inputList))
+
+    def myfunc(item):
+        print(item)
+        # root.destroy()
+
+    buttonList[0] = Button(root, text=inputList[0], command=lambda: myfunc(inputList[0]), bd=0, activeforeground="blue",
+                           justify=LEFT, width=10, height=2, padx=10)
+
+    buttonList[0].pack(side=LEFT)
+    buttonList[0].bind("<Return>", lambda x: myfunc(inputList[0]))
+    buttonList[1] = Button(root, text=inputList[1], command=lambda: myfunc(inputList[1]), bd=0, activeforeground="blue",
+                           justify=LEFT, width=10, height=2, padx=10)
+    buttonList[1].pack(side=LEFT)
+    buttonList[1].bind("<Return>", lambda x: myfunc(inputList[1]))
+
+    buttonList[2] = Button(root, text=inputList[2], command=lambda: myfunc(inputList[2]), bd=0, activeforeground="blue",
+                           justify=LEFT, width=10, height=2, padx=10)
+    buttonList[2].pack(side=LEFT)
+    buttonList[2].bind("<Return>", lambda x: myfunc(inputList[2]))
+
+    buttonList[3] = Button(root, text=inputList[3], command=lambda: myfunc(inputList[3]), bd=0, activeforeground="blue",
+                           justify=LEFT, width=10, height=2, padx=10)
+    buttonList[3].pack(side=LEFT)
+    buttonList[3].bind("<Return>", lambda x: myfunc(inputList[3]))
+
+    buttonList[4] = Button(root, text=inputList[4], command=lambda: myfunc(inputList[4]), bd=0, activeforeground="blue",
+                           justify=LEFT, width=10, height=2, padx=10)
+    buttonList[4].pack(side=LEFT)
+    buttonList[4].bind("<Return>", lambda x: myfunc(inputList[4]))
 
 
 def show_typing(last_char):
@@ -71,15 +124,15 @@ def show_typing(last_char):
     root.mainloop()
 
 
-def show(string):
+def show(string, index=0):
     """ show the string in gui"""
 
     if 'root' not in globals():
         create_gui()
 
-    label.config(text=string)
+    buttonList[index].config(text=string)
 
-    label.pack()
+    #label.pack()
     root.mainloop()
 
 
@@ -136,7 +189,7 @@ def predict_with_lstm(current_sentence):
     # word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
 
     if word is not None:
-        show(word)
+        show(word, 1)
 
 
 def process_keypress(last_char):
