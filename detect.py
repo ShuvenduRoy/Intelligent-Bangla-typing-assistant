@@ -73,30 +73,49 @@ def create_gui():
         root.destroy()
         del globals()['root']
 
-    buttonList[0] = Button(root, text=inputList[0], command=lambda: myfunc(inputList[0]), bd=0, activeforeground="blue",
+    global suggest_sentenece_selected, suggest_sentenece_unselected
+
+    fm = Frame(root)
+    suggest_sentenece_selected = Button(fm, text="full suggested sentence", command=lambda: myfunc(inputList[0]), bd=0, activeforeground="blue",
+                           justify=LEFT, height=2, padx=10).pack(side=LEFT)
+
+    suggest_sentenece_selected = Button(fm, text="unselected", command=lambda: myfunc(inputList[0]), bd=0, activeforeground="blue",
+                                        justify=LEFT, height=2, padx=10).pack(side=LEFT)
+    fm.pack(side=TOP)
+
+    fm2 = Frame(root)
+    buttonList[0] = Button(fm2, text=inputList[0], command=lambda: myfunc(inputList[0]), bd=0, activeforeground="blue",
                            justify=LEFT, width=10, height=2, padx=10)
 
     buttonList[0].pack(side=LEFT)
     buttonList[0].bind("<Return>", lambda x: myfunc(inputList[0]))
-    buttonList[1] = Button(root, text=inputList[1], command=lambda: myfunc(inputList[1]), bd=0, activeforeground="blue",
+    buttonList[1] = Button(fm2, text=inputList[1], command=lambda: myfunc(inputList[1]), bd=0, activeforeground="blue",
                            justify=LEFT, width=10, height=2, padx=10)
     buttonList[1].pack(side=LEFT)
     buttonList[1].bind("<Return>", lambda x: myfunc(inputList[1]))
 
-    buttonList[2] = Button(root, text=inputList[2], command=lambda: myfunc(inputList[2]), bd=0, activeforeground="blue",
+    buttonList[2] = Button(fm2, text=inputList[2], command=lambda: myfunc(inputList[2]), bd=0, activeforeground="blue",
                            justify=LEFT, width=10, height=2, padx=10)
     buttonList[2].pack(side=LEFT)
     buttonList[2].bind("<Return>", lambda x: myfunc(inputList[2]))
 
-    buttonList[3] = Button(root, text=inputList[3], command=lambda: myfunc(inputList[3]), bd=0, activeforeground="blue",
+    buttonList[3] = Button(fm2, text=inputList[3], command=lambda: myfunc(inputList[3]), bd=0, activeforeground="blue",
                            justify=LEFT, width=10, height=2, padx=10)
     buttonList[3].pack(side=LEFT)
     buttonList[3].bind("<Return>", lambda x: myfunc(inputList[3]))
 
-    buttonList[4] = Button(root, text=inputList[4], command=lambda: myfunc(inputList[4]), bd=0, activeforeground="blue",
+    buttonList[4] = Button(fm2, text=inputList[4], command=lambda: myfunc(inputList[4]), bd=0, activeforeground="blue",
                            justify=LEFT, width=10, height=2, padx=10)
     buttonList[4].pack(side=LEFT)
     buttonList[4].bind("<Return>", lambda x: myfunc(inputList[4]))
+
+    buttonList[5] = Button(fm2, text=inputList[5], command=lambda: myfunc(inputList[4]), bd=0, activeforeground="blue",
+                           justify=LEFT, width=10, height=2, padx=10)
+    buttonList[5].pack(side=LEFT)
+    buttonList[5].bind("<Return>", lambda x: myfunc(inputList[5]))
+    fm2.pack(side=TOP)
+
+
 
 
 def show_typing(last_char):
@@ -326,5 +345,8 @@ def OnKeyboardEvent(event):
 
     # return True to pass the event to other handlers
     return True
+
+if __name__ == '__main__':
+    show('hi')
 
 
