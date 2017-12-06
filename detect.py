@@ -115,12 +115,12 @@ def show_typing(last_char):
     else:
         return
 
-    text = label.cget("text")
+    text = buttonList[0].cget("text")
     text += last_char.lower()
 
-    label.config(text=text)
+    buttonList[0].config(text=text)
 
-    label.pack()
+    buttonList[0].pack()
     root.mainloop()
 
 
@@ -327,11 +327,3 @@ def OnKeyboardEvent(event):
     return True
 
 
-# create a hook manager
-hm = pyHook.HookManager()
-# watch for all mouse events
-hm.KeyDown = OnKeyboardEvent
-# set the hook
-hm.HookKeyboard()
-# wait forever
-pythoncom.PumpMessages()
