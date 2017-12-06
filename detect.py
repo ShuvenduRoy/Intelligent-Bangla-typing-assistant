@@ -23,6 +23,13 @@ except ImportError:  # Python 2
     import tkFont as font
 
 
+def updateGui():
+    suggest_sentenece_selected.set("1")
+    suggest_sentenece_unselected.set("2")
+    inputList[0].set("hi hey")
+    inputList[1].set("there")
+
+
 def create_gui():
     """ Create GUI window to show suggesting"""
     # global root
@@ -63,59 +70,71 @@ def create_gui():
 
     # root.geometry("500x90+0+0")
     global inputList
-    inputList = ['option 1', 'option 2', 'option 3', 'option 4', 'option 5', 'option 6']
+    inputList = [StringVar() for _ in range(6)] # ['option 1', 'option 2', 'option 3', 'option 4', 'option 5', 'option 6']
 
     global buttonList
     buttonList = [None] * (len(inputList))
 
     def myfunc(item):
-        print(item)
+        print(item.get())
         root.destroy()
         del globals()['root']
 
-    global suggest_sentenece_selected, suggest_sentenece_unselected
+    global suggest_sentenece_selected
+    suggest_sentenece_selected = StringVar()
+
+    global  suggest_sentenece_unselected
+    suggest_sentenece_unselected = StringVar()
 
     fm = Frame(root)
-    suggest_sentenece_selected = Button(fm, text="full suggested sentence", command=lambda: myfunc(inputList[0]), bd=0, activeforeground="blue",
-                           justify=LEFT, height=2, padx=10).pack(side=LEFT)
+    suggest_sentenece_selected_btn = Button(fm, textvariable=suggest_sentenece_selected,
+                                        command=lambda: myfunc(suggest_sentenece_selected), bd=0, activeforeground="blue",
+                                        justify=LEFT, height=2, padx=10).pack(side=LEFT)
 
-    suggest_sentenece_selected = Button(fm, text="unselected", command=lambda: myfunc(inputList[0]), bd=0, activeforeground="blue",
+    suggest_sentenece_unselected_btn = Button(fm, textvariable=suggest_sentenece_unselected,
+                                        command=lambda: myfunc(suggest_sentenece_unselected), bd=0, activeforeground="blue",
                                         justify=LEFT, height=2, padx=10).pack(side=LEFT)
     fm.pack(side=TOP)
 
     fm2 = Frame(root)
-    buttonList[0] = Button(fm2, text=inputList[0], command=lambda: myfunc(inputList[0]), bd=0, activeforeground="blue",
+    buttonList[0] = Button(fm2, textvariable=inputList[0], command=lambda: myfunc(inputList[0]), bd=0,
+                           activeforeground="blue",
                            justify=LEFT, width=10, height=2, padx=10)
 
     buttonList[0].pack(side=LEFT)
     buttonList[0].bind("<Return>", lambda x: myfunc(inputList[0]))
-    buttonList[1] = Button(fm2, text=inputList[1], command=lambda: myfunc(inputList[1]), bd=0, activeforeground="blue",
+    buttonList[1] = Button(fm2, textvariable=inputList[1], command=lambda: myfunc(inputList[1]), bd=0,
+                           activeforeground="blue",
                            justify=LEFT, width=10, height=2, padx=10)
     buttonList[1].pack(side=LEFT)
     buttonList[1].bind("<Return>", lambda x: myfunc(inputList[1]))
 
-    buttonList[2] = Button(fm2, text=inputList[2], command=lambda: myfunc(inputList[2]), bd=0, activeforeground="blue",
+    buttonList[2] = Button(fm2, textvariable=inputList[2], command=lambda: myfunc(inputList[2]), bd=0,
+                           activeforeground="blue",
                            justify=LEFT, width=10, height=2, padx=10)
     buttonList[2].pack(side=LEFT)
     buttonList[2].bind("<Return>", lambda x: myfunc(inputList[2]))
 
-    buttonList[3] = Button(fm2, text=inputList[3], command=lambda: myfunc(inputList[3]), bd=0, activeforeground="blue",
+    buttonList[3] = Button(fm2, textvariable=inputList[3], command=lambda: myfunc(inputList[3]), bd=0,
+                           activeforeground="blue",
                            justify=LEFT, width=10, height=2, padx=10)
     buttonList[3].pack(side=LEFT)
     buttonList[3].bind("<Return>", lambda x: myfunc(inputList[3]))
 
-    buttonList[4] = Button(fm2, text=inputList[4], command=lambda: myfunc(inputList[4]), bd=0, activeforeground="blue",
+    buttonList[4] = Button(fm2, textvariable=inputList[4], command=lambda: myfunc(inputList[4]), bd=0,
+                           activeforeground="blue",
                            justify=LEFT, width=10, height=2, padx=10)
     buttonList[4].pack(side=LEFT)
     buttonList[4].bind("<Return>", lambda x: myfunc(inputList[4]))
 
-    buttonList[5] = Button(fm2, text=inputList[5], command=lambda: myfunc(inputList[4]), bd=0, activeforeground="blue",
+    buttonList[5] = Button(fm2, textvariable=inputList[5], command=lambda: myfunc(inputList[5]), bd=0,
+                           activeforeground="blue",
                            justify=LEFT, width=10, height=2, padx=10)
     buttonList[5].pack(side=LEFT)
     buttonList[5].bind("<Return>", lambda x: myfunc(inputList[5]))
     fm2.pack(side=TOP)
 
-
+    updateGui()
 
 
 def show_typing(last_char):
@@ -152,7 +171,7 @@ def show(string, index=0):
 
     buttonList[index].config(text=string)
 
-    #label.pack()
+    # label.pack()
     root.mainloop()
 
 
@@ -346,7 +365,6 @@ def OnKeyboardEvent(event):
     # return True to pass the event to other handlers
     return True
 
+
 if __name__ == '__main__':
     show('hi')
-
-
