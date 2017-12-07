@@ -87,12 +87,16 @@ def create_gui():
     suggest_sentenece_selected_btn = Button(fm, textvariable=suggest_sentenece_selected,
                                             command=lambda: myfunc(suggest_sentenece_selected), bd=0,
                                             activeforeground="blue",
-                                            justify=LEFT, height=2, padx=10).pack(side=LEFT)
+                                            justify=LEFT, height=2, padx=10)
+    suggest_sentenece_selected_btn.pack(side=LEFT)
+    suggest_sentenece_selected_btn.bind("<Return>", lambda x: myfunc(suggest_sentenece_selected))
 
     suggest_sentenece_unselected_btn = Button(fm, textvariable=suggest_sentenece_unselected,
                                               command=lambda: myfunc(suggest_sentenece_unselected), bd=0,
                                               activeforeground="blue",
-                                              justify=LEFT, height=2, padx=10).pack(side=LEFT)
+                                              justify=LEFT, height=2, padx=10)
+    suggest_sentenece_unselected_btn.pack(side=LEFT)
+    suggest_sentenece_unselected_btn.bind("<Return>", lambda x: myfunc(suggest_sentenece_unselected))
     fm.pack(side=TOP)
 
     fm2 = Frame(root)
