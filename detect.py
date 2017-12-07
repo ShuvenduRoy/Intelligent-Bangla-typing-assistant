@@ -28,8 +28,95 @@ except ImportError:  # Python 2
 def updateGui():
     suggest_sentenece_selected.set("1")
     suggest_sentenece_unselected.set("2")
+
     inputList[0].set("hi hey")
     inputList[1].set("there")
+
+
+def change_gui_mode():
+    global root
+    root.destroy()
+
+    root = tk.Tk()
+    root.wm_attributes("-topmost", True)
+    root.attributes('-fullscreen', False)
+    root.resizable(width=False, height=False)
+
+    screen_width = int(root.winfo_screenwidth() * .40)
+    screen_height = int(root.winfo_screenheight() * .06)
+    screen_resolution = '0' + '0' + str(screen_width) + 'x' + str(screen_height)
+
+    root.geometry(screen_resolution)
+
+    # root.geometry("500x90+0+0")
+    global inputList
+    inputList = [StringVar() for _ in range(6)]
+
+    global buttonList
+    buttonList = [None] * (len(inputList))
+
+    global suggest_sentenece_selected
+    suggest_sentenece_selected = StringVar()
+
+    global suggest_sentenece_unselected
+    suggest_sentenece_unselected = StringVar()
+
+    fm = Frame(root)
+    suggest_sentenece_selected_btn = Button(fm, textvariable=suggest_sentenece_selected,
+                                            command=lambda: myfunc(suggest_sentenece_selected), bd=0,
+                                            activeforeground="blue",
+                                            justify=LEFT, height=2, padx=10)
+    suggest_sentenece_selected_btn.pack(side=LEFT)
+    suggest_sentenece_selected_btn.bind("<Return>", lambda x: myfunc(suggest_sentenece_selected))
+
+    suggest_sentenece_unselected_btn = Button(fm, textvariable=suggest_sentenece_unselected,
+                                              command=lambda: myfunc(suggest_sentenece_unselected), bd=0,
+                                              activeforeground="blue",
+                                              justify=LEFT, height=2, padx=10)
+    suggest_sentenece_unselected_btn.pack(side=LEFT)
+    suggest_sentenece_unselected_btn.bind("<Return>", lambda x: myfunc(suggest_sentenece_unselected))
+    fm.pack(side=TOP)
+
+    fm2 = Frame(root)
+    buttonList[0] = Button(fm2, textvariable=inputList[0], command=lambda: myfunc(inputList[0]), bd=0,
+                           activeforeground="blue",
+                           justify=LEFT, width=10, height=2, padx=10)
+
+    buttonList[0].pack(side=LEFT)
+    buttonList[0].bind("<Return>", lambda x: myfunc(inputList[0]))
+    buttonList[1] = Button(fm2, textvariable=inputList[1], command=lambda: myfunc(inputList[1]), bd=0,
+                           activeforeground="blue",
+                           justify=LEFT, width=10, height=2, padx=10)
+    buttonList[1].pack(side=LEFT)
+    buttonList[1].bind("<Return>", lambda x: myfunc(inputList[1]))
+
+    buttonList[2] = Button(fm2, textvariable=inputList[2], command=lambda: myfunc(inputList[2]), bd=0,
+                           activeforeground="blue",
+                           justify=LEFT, width=10, height=2, padx=10)
+    buttonList[2].pack(side=LEFT)
+    buttonList[2].bind("<Return>", lambda x: myfunc(inputList[2]))
+
+    buttonList[3] = Button(fm2, textvariable=inputList[3], command=lambda: myfunc(inputList[3]), bd=0,
+                           activeforeground="blue",
+                           justify=LEFT, width=10, height=2, padx=10)
+    buttonList[3].pack(side=LEFT)
+    buttonList[3].bind("<Return>", lambda x: myfunc(inputList[3]))
+
+    buttonList[4] = Button(fm2, textvariable=inputList[4], command=lambda: myfunc(inputList[4]), bd=0,
+                           activeforeground="blue",
+                           justify=LEFT, width=10, height=2, padx=10)
+    buttonList[4].pack(side=LEFT)
+    buttonList[4].bind("<Return>", lambda x: myfunc(inputList[4]))
+
+    buttonList[5] = Button(fm2, textvariable=inputList[5], command=lambda: myfunc(inputList[5]), bd=0,
+                           activeforeground="blue",
+                           justify=LEFT, width=10, height=2, padx=10)
+    buttonList[5].pack(side=LEFT)
+    buttonList[5].bind("<Return>", lambda x: myfunc(inputList[5]))
+    fm2.pack(side=TOP)
+
+    updateGui()
+    root.mainloop()
 
 
 def create_gui():
@@ -136,6 +223,20 @@ def create_gui():
     buttonList[5].pack(side=LEFT)
     buttonList[5].bind("<Return>", lambda x: myfunc(inputList[5]))
     fm2.pack(side=TOP)
+
+    # get screen width and height
+    ws = root.winfo_screenwidth()  # width of the screen
+    hs = root.winfo_screenheight()  # height of the screen
+
+    root.geometry('+%d+%d' % (50, 50))
+
+    root.overrideredirect(True)
+    # root.geometry("+250+250")
+    root.lift()
+    root.wm_attributes("-topmost", True)
+    root.wm_attributes("-disabled", True)
+    root.wm_attributes("-transparentcolor", "white")
+    root.attributes("-alpha", 0.7)
 
     updateGui()
 
@@ -363,6 +464,9 @@ def OnKeyboardEvent(event):
     # print('Alt', event.Alt)
     # print('Transition', event.Transition)
     # print('---')
+    # if 'root' in globals():
+    #     change_gui_mode()
+
     if 'do_process_key' not in globals():
         global do_process_key
         do_process_key = True
