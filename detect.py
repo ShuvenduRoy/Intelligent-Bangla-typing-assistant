@@ -273,7 +273,7 @@ def show(string, index=0):
     if 'root' not in globals():
         create_gui()
 
-    buttonList[index].config(text=string)
+    inputList[index].set(string)
 
     # label.pack()
     root.mainloop()
@@ -445,8 +445,11 @@ def process_keypress(last_char):
     # show_typing(last_char)
 
     # Convert if it bangla is enabled
+    global inputList
     if enabled_language == "bangla":
         show(current_bangla_word)
+    else:
+        show(current_word)
 
 
 def OnKeyboardEvent(event):
