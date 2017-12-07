@@ -32,7 +32,7 @@ def updateGui():
     for i in range(6):
         inputList[i].set(suggestions[i])
 
-    inputList[5].set('hi')
+    inputList[5].set('hi there')
 
 
 def change_gui_mode():
@@ -506,6 +506,7 @@ def myfunc(item):
     root.destroy()
     del globals()['root']
 
+    print("input is " + item.get())
     # stop key press processing
     global do_process_key
     do_process_key = False
