@@ -26,11 +26,13 @@ except ImportError:  # Python 2
 
 
 def updateGui():
-    suggest_sentenece_selected.set("1")
-    suggest_sentenece_unselected.set("2")
+    suggest_sentenece_selected.set(suggestions[6])
+    suggest_sentenece_unselected.set(suggestions[7])
 
-    inputList[0].set("hi hey")
-    inputList[1].set("there")
+    for i in range(6):
+        inputList[i].set(suggestions[i])
+
+    inputList[5].set('hi')
 
 
 def change_gui_mode():
@@ -43,12 +45,13 @@ def change_gui_mode():
     root.resizable(width=False, height=False)
 
     screen_width = int(root.winfo_screenwidth() * .40)
-    screen_height = int(root.winfo_screenheight() * .06)
+    screen_height = int(root.winfo_screenheight() * .1)
     screen_resolution = '0' + '0' + str(screen_width) + 'x' + str(screen_height)
 
     root.geometry(screen_resolution)
 
     # root.geometry("500x90+0+0")
+
     global inputList
     inputList = [StringVar() for _ in range(6)]
 
@@ -156,6 +159,13 @@ def create_gui():
     screen_resolution = '0' + '0' + str(screen_width) + 'x' + str(screen_height)
 
     root.geometry(screen_resolution)
+
+    global suggestions
+    suggestions = []
+    for i in range(8):
+        suggestions.append("<blank>")
+
+    # suggestions[6] = 'test'
 
     # root.geometry("500x90+0+0")
     global inputList
@@ -273,7 +283,9 @@ def show(string, index=0):
     if 'root' not in globals():
         create_gui()
 
-    inputList[index].set(string)
+    # inputList[index].set(string)
+    suggestions[index] = string
+    updateGui()
 
     # label.pack()
     root.mainloop()
@@ -390,6 +402,9 @@ def process_keypress(last_char):
         current_bangla_sentence = ""
         current_word = ""
         current_bangla_word = ""
+
+    if last_char == 'tab':
+        change_gui_mode()
 
     elif last_char == 'back':
         # update current
