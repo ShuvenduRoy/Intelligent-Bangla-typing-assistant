@@ -1,5 +1,7 @@
 # importing packages
 from __future__ import print_function
+
+import pyautogui
 import tensorflow as tf
 
 import argparse
@@ -63,37 +65,34 @@ def create_gui():
     root.resizable(width=False, height=False)
 
     screen_width = int(root.winfo_screenwidth() * .40)
-    screen_height = int(root.winfo_screenheight() * .05)
+    screen_height = int(root.winfo_screenheight() * .06)
     screen_resolution = '0' + '0' + str(screen_width) + 'x' + str(screen_height)
 
     root.geometry(screen_resolution)
 
     # root.geometry("500x90+0+0")
     global inputList
-    inputList = [StringVar() for _ in range(6)] # ['option 1', 'option 2', 'option 3', 'option 4', 'option 5', 'option 6']
+    inputList = [StringVar() for _ in range(6)]
 
     global buttonList
     buttonList = [None] * (len(inputList))
 
-    def myfunc(item):
-        print(item.get())
-        root.destroy()
-        del globals()['root']
-
     global suggest_sentenece_selected
     suggest_sentenece_selected = StringVar()
 
-    global  suggest_sentenece_unselected
+    global suggest_sentenece_unselected
     suggest_sentenece_unselected = StringVar()
 
     fm = Frame(root)
     suggest_sentenece_selected_btn = Button(fm, textvariable=suggest_sentenece_selected,
-                                        command=lambda: myfunc(suggest_sentenece_selected), bd=0, activeforeground="blue",
-                                        justify=LEFT, height=2, padx=10).pack(side=LEFT)
+                                            command=lambda: myfunc(suggest_sentenece_selected), bd=0,
+                                            activeforeground="blue",
+                                            justify=LEFT, height=2, padx=10).pack(side=LEFT)
 
     suggest_sentenece_unselected_btn = Button(fm, textvariable=suggest_sentenece_unselected,
-                                        command=lambda: myfunc(suggest_sentenece_unselected), bd=0, activeforeground="blue",
-                                        justify=LEFT, height=2, padx=10).pack(side=LEFT)
+                                              command=lambda: myfunc(suggest_sentenece_unselected), bd=0,
+                                              activeforeground="blue",
+                                              justify=LEFT, height=2, padx=10).pack(side=LEFT)
     fm.pack(side=TOP)
 
     fm2 = Frame(root)
@@ -360,10 +359,38 @@ def OnKeyboardEvent(event):
     # print('Alt', event.Alt)
     # print('Transition', event.Transition)
     # print('---')
-    process_keypress(event.Key)
+    if 'do_process_key' not in globals():
+        global do_process_key
+        do_process_key = True
+
+    if do_process_key:
+        process_keypress(event.Key)
 
     # return True to pass the event to other handlers
     return True
+
+
+def myfunc(item):
+    print(item.get())
+    root.destroy()
+    del globals()['root']
+
+    # stop key press processing
+    global do_process_key
+    do_process_key = False
+
+    keys = []
+    for i in item.get():
+        if i == ' ':
+            keys.append('space')
+        else:
+            keys.append(i)
+
+    keys.append('space')
+    pyautogui.typewrite(keys)
+
+    # re-enable key processing
+    do_process_key = True
 
 
 if __name__ == '__main__':
