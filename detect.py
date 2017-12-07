@@ -45,7 +45,7 @@ def change_gui_mode():
     root.resizable(width=False, height=False)
 
     screen_width = int(root.winfo_screenwidth() * .40)
-    screen_height = int(root.winfo_screenheight() * .1)
+    screen_height = int(root.winfo_screenheight() * .06)
     screen_resolution = '0' + '0' + str(screen_width) + 'x' + str(screen_height)
 
     root.geometry(screen_resolution)
@@ -404,6 +404,8 @@ def process_keypress(last_char):
         current_bangla_word = ""
 
     if last_char == 'tab':
+        global do_process_key
+        do_process_key = False
         change_gui_mode()
 
     elif last_char == 'back':
@@ -487,6 +489,9 @@ def OnKeyboardEvent(event):
 
     if 'do_process_key' not in globals():
         global do_process_key
+        do_process_key = True
+
+    if event.Key == 'Retuen':
         do_process_key = True
 
     if do_process_key:
