@@ -44,6 +44,7 @@ def bangla_word_search(start):
                 return words_with_start
     return words_with_start
 
+
 if __name__ == '__main__':
     print(english_word_search('kf'))
-    print(bangla_word_search('যম'))
+    print(bangla_word_search('ব'))

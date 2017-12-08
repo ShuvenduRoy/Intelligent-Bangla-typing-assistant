@@ -15,6 +15,8 @@ from Database import database_handler
 from BanglaPhoneticParser import *
 from tkinter import *
 import keyboard
+import load_dict_words
+from load_dict_words import english_word_search, bangla_word_search
 
 try:
     import tkinter as tk
@@ -33,7 +35,7 @@ def updateGui():
     for i in range(6):
         inputList[i].set(suggestions[i])
 
-    inputList[5].set('hi there')
+    # inputList[5].set('hi there')
 
 
 def change_gui_mode():
@@ -359,7 +361,7 @@ def process_keypress(last_char):
 
         # initialize with one language
         global enabled_language
-        enabled_language = "english"
+        enabled_language = "bangla"
 
         saved_model_path = bangla_model_path if enabled_language == "bangla" else english_model_path
 
@@ -448,10 +450,26 @@ def process_keypress(last_char):
     # show_typing(last_char)
 
     # Convert if it bangla is enabled
-    global inputList
+
+    if 'root' not in globals():
+        create_gui()
+
+    global suggestions
     if enabled_language == "bangla":
+        # load other five suggestion
+        words = bangla_word_search(current_bangla_word[:-1])    # removing one extra space
+        print('"',current_bangla_word,'"', words)
+        for i in range(len(words)):
+            suggestions[i+1] = words[i]
+
         show(current_bangla_word)
     else:
+        # load other five suggestion
+        words = english_word_search(current_word)
+
+        for i in range(len(words)):
+            suggestions[i+1] = words[i]
+
         show(current_word)
 
 
