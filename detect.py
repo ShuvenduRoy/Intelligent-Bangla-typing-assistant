@@ -45,13 +45,23 @@ def change_gui_mode():
     root.attributes('-fullscreen', False)
     root.resizable(width=False, height=False)
 
-    screen_width = int(root.winfo_screenwidth() * .40)
-    screen_height = int(root.winfo_screenheight() * .06)
-    screen_resolution = '0' + '0' + str(screen_width) + 'x' + str(screen_height)
+    screen_width = int(root.winfo_screenwidth() * 1.0)
+    screen_height = 65 # int(root.winfo_screenheight() * .06)
 
-    root.geometry(screen_resolution)
+    # get screen width and height
+    ws = root.winfo_screenwidth()  # width of the screen
+    hs = root.winfo_screenheight()  # height of the screen
 
-    # root.geometry("500x90+0+0")
+    # set the dimensions of the screen
+    # and where it is placed
+    root.geometry('%dx%d+%d+%d' % (screen_width, screen_height, 0, hs-105))
+
+    # root.overrideredirect(True)
+    # # root.geometry("+250+250")
+    # root.lift()
+    # root.wm_attributes("-topmost", True)
+    # root.wm_attributes("-disabled", True)
+    # root.wm_attributes("-transparentcolor", "white")
 
     global inputList
     inputList = [StringVar() for _ in range(6)]
@@ -155,11 +165,16 @@ def create_gui():
     root.attributes('-fullscreen', False)
     root.resizable(width=False, height=False)
 
-    screen_width = int(root.winfo_screenwidth() * .40)
-    screen_height = int(root.winfo_screenheight() * .06)
-    screen_resolution = '0' + '0' + str(screen_width) + 'x' + str(screen_height)
+    screen_width = int(root.winfo_screenwidth() * 1.0)
+    screen_height = 65 # int(root.winfo_screenheight() * .06)
 
-    root.geometry(screen_resolution)
+    # get screen width and height
+    ws = root.winfo_screenwidth()  # width of the screen
+    hs = root.winfo_screenheight()  # height of the screen
+
+    # set the dimensions of the screen
+    # and where it is placed
+    root.geometry('%dx%d+%d+%d' % (screen_width, screen_height, 0, hs-105))
 
     global suggestions
     suggestions = []
@@ -235,19 +250,12 @@ def create_gui():
     buttonList[5].bind("<Return>", lambda x: myfunc(inputList[5]))
     fm2.pack(side=TOP)
 
-    # get screen width and height
-    ws = root.winfo_screenwidth()  # width of the screen
-    hs = root.winfo_screenheight()  # height of the screen
-
-    root.geometry('+%d+%d' % (50, 50))
-
     root.overrideredirect(True)
-    # root.geometry("+250+250")
     root.lift()
     root.wm_attributes("-topmost", True)
     root.wm_attributes("-disabled", True)
     root.wm_attributes("-transparentcolor", "white")
-    root.attributes("-alpha", 0.7)
+    root.attributes("-alpha", 0.9)
 
     updateGui()
 
@@ -371,7 +379,8 @@ def process_keypress(last_char):
         english_model_path = "save/english"
 
         # initialize with one language
-        enabled_language = "bangla"
+        global enabled_language
+        enabled_language = "english"
 
         saved_model_path = bangla_model_path if enabled_language == "bangla" else english_model_path
 
