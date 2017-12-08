@@ -18,6 +18,7 @@ def english_word_search(start):
 
             if len(words_with_start) == 5:
                 return words_with_start
+    return words_with_start
 
 
 def load_bangla_word():
@@ -41,7 +42,8 @@ def bangla_word_search(start):
 
             if len(words_with_start) == 5:
                 return words_with_start
-
+    return words_with_start
 
 if __name__ == '__main__':
+    print(english_word_search('kf'))
     print(bangla_word_search('যম'))
