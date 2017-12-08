@@ -43,4 +43,5 @@ def bangla_word_search(start):
                 return words_with_start
 
 
-print(bangla_word_search('যম'))
+if __name__ == '__main__':
+    print(bangla_word_search('যম'))
