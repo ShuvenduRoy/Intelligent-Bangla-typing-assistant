@@ -17,6 +17,7 @@ from tkinter import *
 import keyboard
 import load_dict_words
 from load_dict_words import english_word_search, bangla_word_search
+from process_text import process_bangla
 
 try:
     import tkinter as tk
@@ -48,7 +49,7 @@ def change_gui_mode():
     root.resizable(width=False, height=False)
 
     screen_width = int(root.winfo_screenwidth() * 1.0)
-    screen_height = 65 # int(root.winfo_screenheight() * .06)
+    screen_height = 65  # int(root.winfo_screenheight() * .06)
 
     # get screen width and height
     ws = root.winfo_screenwidth()  # width of the screen
@@ -56,9 +57,9 @@ def change_gui_mode():
 
     # set the dimensions of the screen
     # and where it is placed
-    root.geometry('%dx%d+%d+%d' % (screen_width, screen_height, 0, hs-105))
+    root.geometry('%dx%d+%d+%d' % (screen_width, screen_height, 0, hs - 105))
 
-    root.overrideredirect(True)     # disable title bar<blank>
+    root.overrideredirect(True)  # disable title bar<blank>
     # root.lift()
     # root.wm_attributes("-topmost", True)
     # root.wm_attributes("-disabled", True)     # make unclickable
@@ -167,7 +168,7 @@ def create_gui():
     root.resizable(width=False, height=False)
 
     screen_width = int(root.winfo_screenwidth() * 1.0)
-    screen_height = 65 # int(root.winfo_screenheight() * .06)
+    screen_height = 65  # int(root.winfo_screenheight() * .06)
 
     # get screen width and height
     ws = root.winfo_screenwidth()  # width of the screen
@@ -175,7 +176,7 @@ def create_gui():
 
     # set the dimensions of the screen
     # and where it is placed
-    root.geometry('%dx%d+%d+%d' % (screen_width, screen_height, 0, hs-105))
+    root.geometry('%dx%d+%d+%d' % (screen_width, screen_height, 0, hs - 105))
 
     global suggestions
     suggestions = []
@@ -324,17 +325,29 @@ def predict_with_lstm_in_shell(current_sentence):
 
 def predict_with_lstm(current_sentence):
     result = (model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8'))
-
-
     result = result.decode("utf-8", "replace")
-
+    result = process_bangla(result)
 
     word = (result.split(" ")[(len(current_sentence.split(" "))) - 1])
 
+    global index_of_suggestion_sentence
+    index_of_suggestion_sentence = 0
+
+    global suggest_sentence
+    suggest_sentence = result.split(" ")[1: ]
+    print('result :',result)
+    print('suggest_sentence: ', suggest_sentence)
+
     # word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
 
-    if word is not None:
-        show(word, 1)
+    print(suggest_sentence[0: index_of_suggestion_sentence+1])
+    print(suggest_sentence[index_of_suggestion_sentence+1:7])
+
+    suggestions[6] = suggest_sentence[0: index_of_suggestion_sentence+1]
+    suggestions[7] = suggest_sentence[index_of_suggestion_sentence+1:7]
+
+    # if word is not None:
+    #     show(word, 1)
 
 
 def process_keypress(last_char):
@@ -417,18 +430,13 @@ def process_keypress(last_char):
             print_on(current_word, current_bangla_word)
 
             for i in range(len(current_word)):
-                 pyautogui.typewrite(['back'])
-
+                pyautogui.typewrite(['back'])
 
         # update current
         current_word = ""
         current_bangla_word = ""
         current_sentence += " "
 
-        # functionality 1: Direct find sentence from history
-        # find_from_history_given_words(current_sentence)
-
-        # functionality 2: use LSTM to suggest next word
         if enabled_language == "bangla":
             current_bangla_sentence = BanglaPhoneticParser.parse(current_sentence)
             predict_with_lstm(current_bangla_sentence)
@@ -449,15 +457,7 @@ def process_keypress(last_char):
         if enabled_language == "bangla":
             current_bangla_word = BanglaPhoneticParser.parse(current_word)
 
-    # print("current sentence: ", current_sentence, "   ", current_bangla_sentence)
-    # print("current word    : ", current_word, "   ", current_bangla_word)
     prev_char = last_char
-    # print("word: ", current_word)
-
-    # show the typing
-    # show_typing(last_char)
-
-    # Convert if it bangla is enabled
 
     if 'root' not in globals():
         create_gui()
@@ -465,10 +465,10 @@ def process_keypress(last_char):
     global suggestions
     if enabled_language == "bangla":
         # load other five suggestion
-        words = bangla_word_search(current_bangla_word[:-1])    # removing one extra space
+        words = bangla_word_search(current_bangla_word[:-1])  # removing one extra space
         # print('"',current_bangla_word,'"', words)
         for i in range(len(words)):
-            suggestions[i+1] = words[i]
+            suggestions[i + 1] = words[i]
 
         show(current_bangla_word)
     else:
@@ -476,7 +476,7 @@ def process_keypress(last_char):
         words = english_word_search(current_word)
 
         for i in range(len(words)):
-            suggestions[i+1] = words[i]
+            suggestions[i + 1] = words[i]
 
         show(current_word)
 
