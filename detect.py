@@ -56,11 +56,10 @@ def change_gui_mode():
     # and where it is placed
     root.geometry('%dx%d+%d+%d' % (screen_width, screen_height, 0, hs-105))
 
-    # root.overrideredirect(True)
-    # # root.geometry("+250+250")
+    root.overrideredirect(True)     # disable title bar<blank>
     # root.lift()
     # root.wm_attributes("-topmost", True)
-    # root.wm_attributes("-disabled", True)
+    # root.wm_attributes("-disabled", True)     # make unclickable
     # root.wm_attributes("-transparentcolor", "white")
 
     global inputList
@@ -256,7 +255,7 @@ def create_gui():
     root.wm_attributes("-disabled", True)
     root.wm_attributes("-transparentcolor", "white")
     root.attributes("-alpha", 0.9)
-
+    # change_gui_mode()
     updateGui()
 
 
@@ -322,31 +321,11 @@ def predict_with_lstm_in_shell(current_sentence):
 
 
 def predict_with_lstm(current_sentence):
-    # with tf.Session() as sess:
-    #     tf.global_variables_initializer().run()
-    #     saver = tf.train.Saver(tf.global_variables())
-    #     ckpt = tf.train.get_checkpoint_state("save")
-    #     if ckpt and ckpt.model_checkpoint_path:
-    #         saver.restore(sess, ckpt.model_checkpoint_path)
-    #         result = str((model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8')))
-    #         print(result)
-    #
-    #         word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
-    #
-    #         if word is not None:
-    #             show(word)
-
-    # current_sentence = "একটি "
-
-    # Changing model for bangla
-    # if enabled_language == "bangla":
-    #     current_sentence = BanglaPhoneticParser.parse(current_sentence)
-
     result = (model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8'))
-    # print(result)
+
 
     result = result.decode("utf-8", "replace")
-    print(result)
+
 
     word = (result.split(" ")[(len(current_sentence.split(" "))) - 1])
 
@@ -455,16 +434,13 @@ def process_keypress(last_char):
             if 'a' <= last_char <= 'z':
                 last_char = last_char.upper()
 
-        # print(prev_char, last_char)
-
         current_sentence += last_char
         current_word += last_char
         if enabled_language == "bangla":
             current_bangla_word = BanglaPhoneticParser.parse(current_word)
 
-    # print(current_sentence)
-    print("current sentence: ", current_sentence, "   ", current_bangla_sentence)
-    print("current word    : ", current_word, "   ", current_bangla_word)
+    # print("current sentence: ", current_sentence, "   ", current_bangla_sentence)
+    # print("current word    : ", current_word, "   ", current_bangla_word)
     prev_char = last_char
     # print("word: ", current_word)
 
