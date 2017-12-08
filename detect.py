@@ -14,6 +14,7 @@ import os
 from Database import database_handler
 from BanglaPhoneticParser import *
 from tkinter import *
+import keyboard
 
 try:
     import tkinter as tk
@@ -403,7 +404,7 @@ def process_keypress(last_char):
         current_word = ""
         current_bangla_word = ""
 
-    if last_char == 'tab':
+    elif last_char == 'insert':
         global do_process_key
         do_process_key = False
         change_gui_mode()
@@ -511,15 +512,16 @@ def myfunc(item):
     global do_process_key
     do_process_key = False
 
-    keys = []
-    for i in item.get():
-        if i == ' ':
-            keys.append('space')
-        else:
-            keys.append(i)
-
-    keys.append('space')
-    pyautogui.typewrite(keys)
+    # keys = []
+    # for i in item.get():
+    #     if i == ' ':
+    #         keys.append('space')
+    #     else:
+    #         keys.append(i)
+    #
+    # keys.append('space')
+    # pyautogui.typewrite(keys)
+    keyboard.write(item.get())
 
     # re-enable key processing
     do_process_key = True
