@@ -3,13 +3,13 @@ Smart typing assistance. Help you to autofill and suggest relavent stuff
 
 ## Feature
 - Detect the sentence you typing
-- Suggest sentence from your typing history
+- Suggest next word with help of LSTM trained on our typing history 
+- 6 possible suggestions
+- Full sentence suggestion
 
 
 ## Next Version includes
-- Suggest word from dictionary
 - Translate your word
-- English bangla to Bangla conversion
 - Inplace google search for selected text
 - Voice to text assistance
 
