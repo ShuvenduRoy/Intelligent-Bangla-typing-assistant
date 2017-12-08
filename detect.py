@@ -302,6 +302,38 @@ def show(string, index=0):
     root.mainloop()
 
 
+def suggestion_action_handeler(last_char):
+    print(last_char)
+    if last_char == 'Insert':
+        global index_of_suggestion_sentence
+        index_of_suggestion_sentence += 1
+
+        suggestion_1 = ' '.join(suggest_sentence[0: index_of_suggestion_sentence + 1])
+        suggestion_2 = ' '.join(suggest_sentence[index_of_suggestion_sentence + 1: 7])
+
+        suggestions[6] = suggestion_1
+        suggestions[7] = suggestion_2
+
+        updateGui()
+
+    else:
+        if 'disabled' not in globals():
+            global disabled
+            disabled = False
+
+        if disabled:
+            return
+
+        disabled = True
+        index = int(last_char)
+        global current_word
+
+        print(current_word)
+        print_on("", suggestions[index] + '  ')
+
+        disabled = False
+
+
 def find_from_history_given_words(current_sentence):
     # get from database
     word = database_handler.string_strart_with(current_sentence)
@@ -334,14 +366,13 @@ def predict_with_lstm(current_sentence):
     index_of_suggestion_sentence = 0
 
     global suggest_sentence
-    suggest_sentence = result.split(" ")[1: ]
+    suggest_sentence = result.split(" ")[1:]
 
     suggestion_1 = ' '.join(suggest_sentence[0: index_of_suggestion_sentence + 1])
-    suggestion_2 = ' '.join(suggest_sentence[index_of_suggestion_sentence+1 : 7])
+    suggestion_2 = ' '.join(suggest_sentence[index_of_suggestion_sentence + 1: 7])
 
     suggestions[6] = suggestion_1
     suggestions[7] = suggestion_2
-
 
 
 def process_keypress(last_char):
@@ -502,6 +533,8 @@ def OnKeyboardEvent(event):
 
     if do_process_key:
         process_keypress(event.Key)
+    else:
+        suggestion_action_handeler(event.Key)
 
     # return True to pass the event to other handlers
     return True
