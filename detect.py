@@ -412,6 +412,14 @@ def process_keypress(last_char):
 
     # Detect end of word
     elif last_char == 'space':
+        if enabled_language == "bangla":
+            print('bangla detected')
+            print_on(current_word, current_bangla_word)
+
+            for i in range(len(current_word)):
+                 pyautogui.typewrite(['back'])
+
+
         # update current
         current_word = ""
         current_bangla_word = ""
@@ -458,7 +466,7 @@ def process_keypress(last_char):
     if enabled_language == "bangla":
         # load other five suggestion
         words = bangla_word_search(current_bangla_word[:-1])    # removing one extra space
-        print('"',current_bangla_word,'"', words)
+        # print('"',current_bangla_word,'"', words)
         for i in range(len(words)):
             suggestions[i+1] = words[i]
 
@@ -506,7 +514,6 @@ def OnKeyboardEvent(event):
 
 
 def myfunc(item):
-    print(item.get())
     root.destroy()
     del globals()['root']
 
@@ -515,16 +522,22 @@ def myfunc(item):
     global do_process_key
     do_process_key = False
 
-    # keys = []
-    # for i in item.get():
-    #     if i == ' ':
-    #         keys.append('space')
-    #     else:
-    #         keys.append(i)
-    #
-    # keys.append('space')
-    # pyautogui.typewrite(keys)
     keyboard.write(item.get())
+
+    # re-enable key processing
+    do_process_key = True
+
+
+def print_on(del_word, item):
+    print("input is ", item, len(item), len(del_word))
+
+    global do_process_key
+    do_process_key = False
+
+    for i in range(len(del_word)):
+        keyboard.press_and_release('backspace')
+    keyboard.write(item)
+    keyboard.press_and_release('backspace')
 
     # re-enable key processing
     do_process_key = True
