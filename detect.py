@@ -352,14 +352,22 @@ def predict_with_lstm(current_sentence):
     result = (model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8'))
     result = result.decode("utf-8", "replace")
     result = process_bangla(result)
+    type(result)
 
-    word = (result.split(" ")[(len(current_sentence.split(" "))) - 1])
+    result = result.split(" ")
+
+    # word = (result.split(" ")[(len(current_sentence.split(" "))) - 1])
+    print(current_sentence)
+    current_sentence_len = current_sentence.split(" ")
+    print(current_sentence_len)
+    result = result[len(current_sentence_len)-1:]
+    print(result)
 
     global index_of_suggestion_sentence
     index_of_suggestion_sentence = 0
 
     global suggest_sentence
-    suggest_sentence = result.split(" ")[1:]
+    suggest_sentence = result[1:]
 
     suggestion_1 = ' '.join(suggest_sentence[0: index_of_suggestion_sentence + 1])
     suggestion_2 = ' '.join(suggest_sentence[index_of_suggestion_sentence + 1: 7])
