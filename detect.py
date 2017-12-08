@@ -530,8 +530,6 @@ def OnKeyboardEvent(event):
     if event.Key == 'Retuen':
         do_process_key = True
 
-
-
     if do_process_key:
         process_keypress(event.Key)
     else:
