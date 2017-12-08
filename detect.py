@@ -303,7 +303,6 @@ def show(string, index=0):
 
 
 def suggestion_action_handeler(last_char):
-    print(last_char)
     if last_char == 'Insert':
         global index_of_suggestion_sentence
         index_of_suggestion_sentence += 1
@@ -316,14 +315,8 @@ def suggestion_action_handeler(last_char):
 
         updateGui()
 
-    else:
-        if 'disabled' not in globals():
-            global disabled
-            disabled = False
-
-        if disabled:
-            return
-
+    elif '0' <= last_char <= '7':
+        global disabled
         disabled = True
         index = int(last_char)
         global current_word
@@ -523,6 +516,12 @@ def OnKeyboardEvent(event):
     # print('---')
     # if 'root' in globals():
     #     change_gui_mode()
+    if 'disabled' not in globals():
+        global disabled
+        disabled = False
+
+    if disabled:
+        return True
 
     if 'do_process_key' not in globals():
         global do_process_key
@@ -530,6 +529,8 @@ def OnKeyboardEvent(event):
 
     if event.Key == 'Retuen':
         do_process_key = True
+
+
 
     if do_process_key:
         process_keypress(event.Key)
@@ -544,8 +545,6 @@ def myfunc(item):
     root.destroy()
     del globals()['root']
 
-    print("input is " + item.get())
-    # stop key press processing
     global do_process_key
     do_process_key = False
 
@@ -556,7 +555,8 @@ def myfunc(item):
 
 
 def print_on(del_word, item):
-    print("input is ", item, len(item), len(del_word))
+    root.destroy()
+    del globals()['root']
 
     global do_process_key
     do_process_key = False
