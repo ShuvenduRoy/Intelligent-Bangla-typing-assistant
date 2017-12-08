@@ -335,19 +335,13 @@ def predict_with_lstm(current_sentence):
 
     global suggest_sentence
     suggest_sentence = result.split(" ")[1: ]
-    print('result :',result)
-    print('suggest_sentence: ', suggest_sentence)
 
-    # word = result.split("\n")[0].split(" ")[len(current_sentence.split(" ")) - 1]
+    suggestion_1 = ' '.join(suggest_sentence[0: index_of_suggestion_sentence + 1])
+    suggestion_2 = ' '.join(suggest_sentence[index_of_suggestion_sentence+1 : 7])
 
-    print(suggest_sentence[0: index_of_suggestion_sentence+1])
-    print(suggest_sentence[index_of_suggestion_sentence+1:7])
+    suggestions[6] = suggestion_1
+    suggestions[7] = suggestion_2
 
-    suggestions[6] = suggest_sentence[0: index_of_suggestion_sentence+1]
-    suggestions[7] = suggest_sentence[index_of_suggestion_sentence+1:7]
-
-    # if word is not None:
-    #     show(word, 1)
 
 
 def process_keypress(last_char):
@@ -374,7 +368,7 @@ def process_keypress(last_char):
 
         # initialize with one language
         global enabled_language
-        enabled_language = "bangla"
+        enabled_language = "english"
 
         saved_model_path = bangla_model_path if enabled_language == "bangla" else english_model_path
 
