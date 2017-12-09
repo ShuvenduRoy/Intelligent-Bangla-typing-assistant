@@ -19,6 +19,7 @@ import keyboard
 import load_dict_words
 from load_dict_words import english_word_search, bangla_word_search
 from process_text import process_bangla
+from helper_function import del_current_word
 
 try:
     import tkinter as tk
@@ -323,12 +324,17 @@ def suggestion_action_handeler(event):
             global disabled
             disabled = True
             global current_word
+            del_current_word(current_word)
+
+            # for j in range(8):
+            #     print('$'+suggestions[j]+'$')
 
             global suggestions
             print_on("", suggestions[i] + ' ')
             print(suggestions[i])
 
             disabled = False
+
 
 
 def find_from_history_given_words(current_sentence):
@@ -453,7 +459,6 @@ def process_keypress(last_char):
     # Detect end of word
     elif last_char == 'space':
         if enabled_language == "bangla":
-            print('bangla detected')
             print_on(current_word, current_bangla_word)
 
             # for i in range(len(current_word)):
