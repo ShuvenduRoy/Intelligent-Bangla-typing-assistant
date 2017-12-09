@@ -331,7 +331,7 @@ def suggestion_action_handeler(event):
 
             global suggestions
             print_on("", suggestions[i] + ' ')
-            print(suggestions[i])
+            # print(suggestions[i])
 
             disabled = False
 
@@ -559,6 +559,9 @@ def myfunc(item):
 
     global do_process_key
     do_process_key = False
+
+    global current_word
+    del_current_word(current_word)
 
     keyboard.write(item.get())
 
