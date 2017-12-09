@@ -401,7 +401,7 @@ def process_keypress(last_char):
 
         # initialize with one language
         global enabled_language
-        enabled_language = "english"
+        enabled_language = "bangla"
 
         saved_model_path = bangla_model_path if enabled_language == "bangla" else english_model_path
 
@@ -456,8 +456,8 @@ def process_keypress(last_char):
             print('bangla detected')
             print_on(current_word, current_bangla_word)
 
-            for i in range(len(current_word)):
-                pyautogui.typewrite(['back'])
+            # for i in range(len(current_word)):
+            #     pyautogui.typewrite(['back'])
 
         # update current
         current_word = ""
@@ -562,8 +562,8 @@ def myfunc(item):
 
 
 def print_on(del_word, item):
-    root.destroy()
-    del globals()['root']
+    # root.destroy()
+    # del globals()['root']
 
     global do_process_key
     do_process_key = False
