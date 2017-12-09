@@ -10,6 +10,7 @@ from six.moves import cPickle
 from model import Model
 from six import text_type
 import pythoncom, pyHook
+from pyHook import HookManager, GetKeyState, HookConstants
 import os
 from Database import database_handler
 from BanglaPhoneticParser import *
@@ -302,7 +303,9 @@ def show(string, index=0):
     root.mainloop()
 
 
-def suggestion_action_handeler(last_char):
+def suggestion_action_handeler(event):
+    last_char = event.Key
+
     if last_char == 'Insert':
         global index_of_suggestion_sentence
         index_of_suggestion_sentence += 1
@@ -315,16 +318,17 @@ def suggestion_action_handeler(last_char):
 
         updateGui()
 
-    elif '0' <= last_char <= '7':
-        global disabled
-        disabled = True
-        index = int(last_char)
-        global current_word
+    for i in range(8):
+        if GetKeyState(HookConstants.VKeyToID('VK_CONTROL')) and HookConstants.IDToName(event.KeyID) == str(i):
+            global disabled
+            disabled = True
+            global current_word
 
-        print(current_word)
-        print_on("", suggestions[index] + '  ')
+            global suggestions
+            print_on("", suggestions[i] + ' ')
+            print(suggestions[i])
 
-        disabled = False
+            disabled = False
 
 
 def find_from_history_given_words(current_sentence):
@@ -357,11 +361,8 @@ def predict_with_lstm(current_sentence):
     result = result.split(" ")
 
     # word = (result.split(" ")[(len(current_sentence.split(" "))) - 1])
-    print(current_sentence)
     current_sentence_len = current_sentence.split(" ")
-    print(current_sentence_len)
     result = result[len(current_sentence_len)-1:]
-    print(result)
 
     global index_of_suggestion_sentence
     index_of_suggestion_sentence = 0
@@ -541,7 +542,7 @@ def OnKeyboardEvent(event):
     if do_process_key:
         process_keypress(event.Key)
     else:
-        suggestion_action_handeler(event.Key)
+        suggestion_action_handeler(event)
 
     # return True to pass the event to other handlers
     return True
@@ -570,7 +571,7 @@ def print_on(del_word, item):
     for i in range(len(del_word)):
         keyboard.press_and_release('backspace')
     keyboard.write(item)
-    keyboard.press_and_release('backspace')
+    # keyboard.press_and_release('backspace')
 
     # re-enable key processing
     do_process_key = True
