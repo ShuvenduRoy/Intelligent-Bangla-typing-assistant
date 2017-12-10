@@ -10,7 +10,7 @@ import time
 
 from Database import database_handler
 from faster_version.global_initializer import *
-from load_dict_words import bangla_word_search, english_word_search
+from helper_functions import *
 
 global suggestions
 suggestions = ['suggestions' + str(i) for i in range(8)]
