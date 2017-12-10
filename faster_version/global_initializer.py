@@ -110,6 +110,7 @@ class App(threading.Thread):
     def updateGui(self, s):
         for i in range (len(s)):
             self.buttonList[i].config(text=s[i])
+            self.inputList[i] = s[i]
 
 
 global app
@@ -130,17 +131,14 @@ do_process_key = True
 
 # TODO test this
 def myfunc(item):
-    # root.destroy()
-    # del globals()['root']
     global do_process_key
     do_process_key = False
 
     global current_word
-    del_current_word(current_word)
+    # del_current_word(current_word)
 
-    keyboard.write(item.get())
+    keyboard.write(item)
 
-    # re-enable key processing
     do_process_key = True
 
 

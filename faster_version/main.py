@@ -11,10 +11,6 @@ suggestions = ['Suggestions' for i in range(8)]
 
 
 def OnKeyboardEvent(event):
-    print('Key:', event.Key)
-    # global current_word
-    print("current_word: ", current_word)
-
     for i in range(8):
         if GetKeyState(HookConstants.VKeyToID('VK_CONTROL')) and HookConstants.IDToName(event.KeyID) == str(i):
             print("Ctrl " + str(i) + " pressed")
@@ -32,10 +28,16 @@ def OnKeyboardEvent(event):
 
             disabled = False
 
-    suggestions[0] = event.Key
-    app.updateGui(suggestions)
+            # TODO handle ctrl+num
+            return True
 
+    if True:
+        print(event.Key)
+
+    suggestions[0] = event.Key
     print()
+
+    app.updateGui(suggestions)
     return True
 
 
