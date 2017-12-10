@@ -23,12 +23,12 @@ def english_word_search(start):
 
 def load_bangla_word():
     import io
-    file = io.open("data/Bangla_word.txt", mode="r", encoding="utf-8")
+    file = io.open("data/bangla_word_freq_count.txt", mode="r", encoding="utf-8")
 
     global bangla_words
     bangla_words = []
     for line in file:
-        bangla_words.append(line)
+        bangla_words.append(line.split(" ")[0])
 
 
 def bangla_word_search(start):
