@@ -26,7 +26,7 @@ class App(threading.Thread):
 
     def run(self):
         self.root = tk.Tk()
-        self.inputList = ["position "+str(i) for i in range(8)]
+        self.inputList = ["position " + str(i) for i in range(8)]
         self.buttonList = [None] * (len(self.inputList))
 
         self.root.overrideredirect(True)
@@ -110,7 +110,7 @@ class App(threading.Thread):
         self.root.mainloop()
 
     def updateGui(self, s):
-        for i in range (len(s)):
+        for i in range(len(s)):
             self.buttonList[i].config(text=s[i])
             self.inputList[i] = s[i]
 
@@ -129,6 +129,15 @@ prev_char = ""
 
 global do_process_key
 do_process_key = True
+
+
+def process_bangla(s):
+    import re
+    # s = "Example       aaaaaaaaa      \n \r String"
+    replaced = re.sub(r'[\n|\r]', ' ', s)
+    replaced = re.sub(r' +', ' ', replaced)
+
+    return replaced
 
 
 def myfunc(item):
@@ -154,28 +163,28 @@ def del_current_word(current_word):
         keyboard.press_and_release('backspace')
     do_process_key = True
 
-# global saved_args, chars, vocab, model, saver, ckpt
-#
-# # path for models
-# global bangla_model_path, english_model_path
-# bangla_model_path = "save/bangla"
-# english_model_path = "save/english"
 
+global saved_args, chars, vocab, model, saver, ckpt
 
-# saved_model_path = bangla_model_path if enabled_language == "bangla" else english_model_path
-#
-# with open(os.path.join(saved_model_path, 'config.pkl'), 'rb') as f:
-#     saved_args = cPickle.load(f)
-# with open(os.path.join(saved_model_path, 'chars_vocab.pkl'), 'rb') as f:
-#     chars, vocab = cPickle.load(f)
-#
-# model = Model(saved_args, training=False)
-#
-# global sess
-# sess = tf.Session()
-# sess.run(tf.global_variables_initializer())
-#
-# saver = tf.train.Saver(tf.global_variables())
-# ckpt = tf.train.get_checkpoint_state(saved_model_path)
-# if ckpt and ckpt.model_checkpoint_path:
-#     saver.restore(sess, ckpt.model_checkpoint_path)
+# path for models
+global bangla_model_path, english_model_path
+bangla_model_path = "save/bangla"
+english_model_path = "save/english"
+
+saved_model_path = bangla_model_path if enabled_language == "bangla" else english_model_path
+
+with open(os.path.join(saved_model_path, 'config.pkl'), 'rb') as f:
+    saved_args = cPickle.load(f)
+with open(os.path.join(saved_model_path, 'chars_vocab.pkl'), 'rb') as f:
+    chars, vocab = cPickle.load(f)
+
+model = Model(saved_args, training=False)
+
+global sess
+sess = tf.Session()
+sess.run(tf.global_variables_initializer())
+
+saver = tf.train.Saver(tf.global_variables())
+ckpt = tf.train.get_checkpoint_state(saved_model_path)
+if ckpt and ckpt.model_checkpoint_path:
+    saver.restore(sess, ckpt.model_checkpoint_path)

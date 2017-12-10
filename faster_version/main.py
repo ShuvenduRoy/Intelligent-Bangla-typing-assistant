@@ -15,6 +15,31 @@ global suggestions
 suggestions = ['suggestions' + str(i) for i in range(8)]
 
 
+def predict_with_lstm(current_sentence):
+    result = (model.sample(sess, chars, vocab, 500, current_sentence, 1).encode('utf-8'))
+    result = result.decode("utf-8", "replace")
+    result = process_bangla(result)
+    type(result)
+
+    result = result.split(" ")
+
+    # word = (result.split(" ")[(len(current_sentence.split(" "))) - 1])
+    current_sentence_len = current_sentence.split(" ")
+    result = result[len(current_sentence_len) - 1:]
+
+    global index_of_suggestion_sentence
+    index_of_suggestion_sentence = 0
+
+    global suggest_sentence
+    suggest_sentence = result[1:]
+
+    suggestion_1 = ' '.join(suggest_sentence[0: index_of_suggestion_sentence + 1])
+    suggestion_2 = ' '.join(suggest_sentence[index_of_suggestion_sentence + 1: 7])
+
+    suggestions[6] = suggestion_1
+    suggestions[7] = suggestion_2
+
+
 def myfunc(item):
     global do_process_key
     do_process_key = False
@@ -77,9 +102,9 @@ def process_keypress(last_char):
 
             myfunc(current_bangla_word)
 
-            # predict_with_lstm(current_bangla_sentence)
+            predict_with_lstm(current_bangla_sentence)
         else:
-            # predict_with_lstm(current_sentence)
+            predict_with_lstm(current_sentence)
             pass
 
         current_word = ""
@@ -122,6 +147,16 @@ def process_keypress(last_char):
 def OnKeyboardEvent(event):
     if not do_process_key:
         return True
+
+    if event.Key == 'Insert':
+        global index_of_suggestion_sentence
+        index_of_suggestion_sentence += 1
+
+        suggestion_1 = ' '.join(suggest_sentence[0: index_of_suggestion_sentence + 1])
+        suggestion_2 = ' '.join(suggest_sentence[index_of_suggestion_sentence + 1: 7])
+
+        suggestions[6] = suggestion_1
+        suggestions[7] = suggestion_2
 
     if '0' <= event.Key <= '7':
         # if GetKeyState(HookConstants.VKeyToID('VK_CONTROL')) and HookConstants.IDToName(event.KeyID) == str(i):
