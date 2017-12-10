@@ -2,6 +2,8 @@ import tkinter as tk
 import threading
 import os
 
+import pyautogui
+import pyperclip
 import keyboard
 from six.moves import cPickle
 import tensorflow as tf
@@ -24,7 +26,7 @@ class App(threading.Thread):
 
     def run(self):
         self.root = tk.Tk()
-        self.inputList = ["Position "+str(i) for i in range(8)]
+        self.inputList = ["position "+str(i) for i in range(8)]
         self.buttonList = [None] * (len(self.inputList))
 
         self.root.overrideredirect(True)
@@ -131,15 +133,16 @@ do_process_key = True
 
 # TODO test this
 def myfunc(item):
-    global do_process_key
-    do_process_key = False
-
-    global current_word
     # del_current_word(current_word)
 
-    keyboard.write(item)
+    global do_process_key
+    # do_process_key = False
+    # keyboard.write(item)
+    pyperclip.copy(item)
+    pyautogui.hotkey("ctrl", "v")
+    # do_process_key = True
 
-    do_process_key = True
+    print(item)
 
 
 # TODO test this

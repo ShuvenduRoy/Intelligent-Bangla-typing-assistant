@@ -4,13 +4,17 @@ import keyboard
 import threading
 import tkinter as tk
 
-from faster_version.global_initializer import current_word, app
+from faster_version.global_initializer import current_word, app, do_process_key
 
 global suggestions
-suggestions = ['Suggestions' for i in range(8)]
+suggestions = ['suggestions' + str(i) for i in range(8)]
 
 
 def OnKeyboardEvent(event):
+    if not do_process_key:
+        return True
+
+    print(event.Key)
     for i in range(8):
         if GetKeyState(HookConstants.VKeyToID('VK_CONTROL')) and HookConstants.IDToName(event.KeyID) == str(i):
             print("Ctrl " + str(i) + " pressed")
