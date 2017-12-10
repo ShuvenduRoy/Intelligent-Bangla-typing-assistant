@@ -6,6 +6,9 @@ import tkinter as tk
 
 from faster_version.global_initializer import current_word, app
 
+global suggestions
+suggestions = ['Suggestions' for i in range(8)]
+
 
 def OnKeyboardEvent(event):
     print('Key:', event.Key)
@@ -29,9 +32,8 @@ def OnKeyboardEvent(event):
 
             disabled = False
 
-    s = ['hi' for i in range(8)]
-    s[5] = event.Key
-    app.updateGui(s)
+    suggestions[0] = event.Key
+    app.updateGui(suggestions)
 
     print()
     return True

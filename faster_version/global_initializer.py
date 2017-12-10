@@ -12,9 +12,6 @@ from tkinter import *
 global enabled_language
 enabled_language = "bangla"
 
-global suggestions
-suggestions = ["Suggestions " + str(i) for i in range(8)]
-
 
 class App(threading.Thread):
 
@@ -27,7 +24,7 @@ class App(threading.Thread):
 
     def run(self):
         self.root = tk.Tk()
-        self.inputList = ["Suggestions "+str(i) for i in range(8)]
+        self.inputList = ["Position "+str(i) for i in range(8)]
         self.buttonList = [None] * (len(self.inputList))
 
         self.root.overrideredirect(True)
@@ -35,7 +32,7 @@ class App(threading.Thread):
         self.root.wm_attributes("-topmost", True)
         # self.root.wm_attributes("-disabled", True)
         self.root.wm_attributes("-transparentcolor", "white")
-        self.root.attributes("-alpha", 0.5)
+        self.root.attributes("-alpha", 0.8)
         #
         # self.root.attributes('-fullscreen', False)
         self.root.resizable(width=False, height=False)
