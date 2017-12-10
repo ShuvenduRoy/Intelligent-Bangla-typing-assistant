@@ -6,6 +6,7 @@ from BanglaPhoneticParser import *
 import keyboard
 import threading
 import tkinter as tk
+import time
 
 from Database import database_handler
 from faster_version.global_initializer import *
@@ -13,6 +14,24 @@ from load_dict_words import bangla_word_search, english_word_search
 
 global suggestions
 suggestions = ['suggestions' + str(i) for i in range(8)]
+
+
+class BackSpace(threading.Thread):
+
+    def __init__(self):
+        threading.Thread.__init__(self)
+        self.start()
+
+    def callback(self):
+        pass
+
+    def run(self):
+        time.sleep(.1)
+        global do_process_key
+        do_process_key = False
+        keyboard.press_and_release('backspace')
+        keyboard.press_and_release('space')
+        do_process_key = True
 
 
 def predict_with_lstm(current_sentence):
@@ -172,7 +191,9 @@ def OnKeyboardEvent(event):
 
             myfunc(suggestions[int(event.Key)])
 
+            back = BackSpace()
             do_process_key = True
+
             return True
 
     if True:
