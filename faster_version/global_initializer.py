@@ -131,7 +131,6 @@ global do_process_key
 do_process_key = True
 
 
-# TODO test this
 def myfunc(item):
     del_current_word(current_word)
 
@@ -146,7 +145,6 @@ def myfunc(item):
     print(item)
 
 
-# TODO test this
 def del_current_word(current_word):
     global do_process_key
     do_process_key = False
