@@ -1,13 +1,19 @@
 import tkinter as tk
 import threading
 import os
+
+import keyboard
 from six.moves import cPickle
 import tensorflow as tf
 from model import Model
+from tkinter import *
 
 # initialize with one language
 global enabled_language
 enabled_language = "bangla"
+
+global suggestions
+suggestions = ["Suggestions " + str(i) for i in range(8)]
 
 
 class App(threading.Thread):
@@ -21,12 +27,15 @@ class App(threading.Thread):
 
     def run(self):
         self.root = tk.Tk()
+        self.inputList = ["Suggestions "+str(i) for i in range(8)]
+        self.buttonList = [None] * (len(self.inputList))
+
         self.root.overrideredirect(True)
         # self.root.lift()
         self.root.wm_attributes("-topmost", True)
         # self.root.wm_attributes("-disabled", True)
         self.root.wm_attributes("-transparentcolor", "white")
-        self.root.attributes("-alpha", 0.9)
+        self.root.attributes("-alpha", 0.5)
         #
         # self.root.attributes('-fullscreen', False)
         self.root.resizable(width=False, height=False)
@@ -39,7 +48,71 @@ class App(threading.Thread):
 
         self.root.geometry('%dx%d+%d+%d' % (screen_width, screen_height, 0, hs - 105))
 
+        fm = Frame(self.root)
+        self.buttonList[6] = Button(fm, text=self.inputList[6],
+                                    command=lambda: myfunc(self.inputList[6]), bd=0,
+                                    activeforeground="blue",
+                                    justify=LEFT, height=2, padx=10)
+        self.buttonList[6].pack(side=LEFT)
+        self.buttonList[6].bind("<Return>", lambda x: myfunc(self.inputList[6]))
+
+        self.buttonList[7] = Button(fm, text=self.inputList[7],
+                                    command=lambda: myfunc(self.inputList[7]), bd=0,
+                                    activeforeground="blue",
+                                    justify=LEFT, height=2, padx=10)
+        self.buttonList[7].pack(side=LEFT)
+        self.buttonList[7].bind("<Return>", lambda x: myfunc(self.inputList[7]))
+        fm.pack(side=TOP)
+
+        fm2 = Frame(self.root)
+        self.buttonList[0] = Button(fm2, text=self.inputList[0], command=lambda: myfunc(self.inputList[0]),
+                                    bd=0,
+                                    activeforeground="blue",
+                                    justify=LEFT, width=10, height=2, padx=10)
+        self.buttonList[0].pack(side=LEFT)
+        self.buttonList[0].bind("<Return>", lambda x: myfunc(self.inputList[0]))
+
+        self.buttonList[1] = Button(fm2, text=self.inputList[1], command=lambda: myfunc(self.inputList[1]),
+                                    bd=0,
+                                    activeforeground="blue",
+                                    justify=LEFT, width=10, height=2, padx=10)
+        self.buttonList[1].pack(side=LEFT)
+        self.buttonList[1].bind("<Return>", lambda x: myfunc(self.inputList[1]))
+
+        self.buttonList[2] = Button(fm2, text=self.inputList[2], command=lambda: myfunc(self.inputList[2]),
+                                    bd=0,
+                                    activeforeground="blue",
+                                    justify=LEFT, width=10, height=2, padx=10)
+        self.buttonList[2].pack(side=LEFT)
+        self.buttonList[2].bind("<Return>", lambda x: myfunc(self.inputList[2]))
+
+        self.buttonList[3] = Button(fm2, text=self.inputList[3], command=lambda: myfunc(self.inputList[3]),
+                                    bd=0,
+                                    activeforeground="blue",
+                                    justify=LEFT, width=10, height=2, padx=10)
+        self.buttonList[3].pack(side=LEFT)
+        self.buttonList[3].bind("<Return>", lambda x: myfunc(self.inputList[3]))
+
+        self.buttonList[4] = Button(fm2, text=self.inputList[4], command=lambda: myfunc(self.inputList[4]),
+                                    bd=0,
+                                    activeforeground="blue",
+                                    justify=LEFT, width=10, height=2, padx=10)
+        self.buttonList[4].pack(side=LEFT)
+        self.buttonList[4].bind("<Return>", lambda x: myfunc(self.inputList[4]))
+
+        self.buttonList[5] = Button(fm2, text=self.inputList[4], command=lambda: myfunc(self.inputList[5]),
+                                    bd=0,
+                                    activeforeground="blue",
+                                    justify=LEFT, width=10, height=2, padx=10)
+        self.buttonList[5].pack(side=LEFT)
+        self.buttonList[5].bind("<Return>", lambda x: myfunc(self.inputList[5]))
+        fm2.pack(side=TOP)
+
         self.root.mainloop()
+
+    def updateGui(self, s):
+        for i in range (len(s)):
+            self.buttonList[i].config(text=s[i])
 
 
 global app
@@ -53,6 +126,37 @@ global current_word, current_bangla_word, prev_char
 current_word = ""
 current_bangla_word = ""
 prev_char = ""
+
+global do_process_key
+do_process_key = True
+
+
+# TODO test this
+def myfunc(item):
+    # root.destroy()
+    # del globals()['root']
+    global do_process_key
+    do_process_key = False
+
+    global current_word
+    del_current_word(current_word)
+
+    keyboard.write(item.get())
+
+    # re-enable key processing
+    do_process_key = True
+
+
+# TODO test this
+def del_current_word(current_word):
+    global disabled, do_process_key
+    disabled = True
+    do_process_key = False
+
+    n = len(current_word)
+    for i in range(n):
+        # pyautogui.typewrite(['backspace'])
+        keyboard.press_and_release('backspace')
 
 # global saved_args, chars, vocab, model, saver, ckpt
 #

@@ -1,11 +1,10 @@
 import pyHook, pythoncom
 from pyHook import HookConstants, GetKeyState
-from global_initializer import *
 import keyboard
 import threading
 import tkinter as tk
 
-from faster_version.global_initializer import current_word
+from faster_version.global_initializer import current_word, app
 
 
 def OnKeyboardEvent(event):
@@ -30,9 +29,12 @@ def OnKeyboardEvent(event):
 
             disabled = False
 
+    s = ['hi' for i in range(8)]
+    s[5] = event.Key
+    app.updateGui(s)
+
+    print()
     return True
-
-
 
 
 # create a hook manager
