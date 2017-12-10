@@ -103,3 +103,5 @@ docs/
 faster_version/data/
 data/english/text8
 data/bangla_wiki/bnwiki-20170101-pages-articles.xml
+data/bangla_wiki/bangla_corpus.txt
+data/bangla_wiki/bangla_word_freq_count.txt
