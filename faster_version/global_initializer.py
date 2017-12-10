@@ -1,4 +1,5 @@
 import tkinter as tk
+import threading
 import os
 from six.moves import cPickle
 import tensorflow as tf
@@ -8,25 +9,41 @@ from model import Model
 global enabled_language
 enabled_language = "bangla"
 
-global root
-root = tk.Tk()
-root.overrideredirect(True)
-root.lift()
-root.wm_attributes("-topmost", True)
-root.wm_attributes("-disabled", True)
-root.wm_attributes("-transparentcolor", "white")
-root.attributes("-alpha", 0.9)
 
-root.attributes('-fullscreen', False)
-root.resizable(width=False, height=False)
+class App(threading.Thread):
 
-screen_width = int(root.winfo_screenwidth() * 1.0)
-screen_height = 65  # int(root.winfo_screenheight() * .06)
+    def __init__(self):
+        threading.Thread.__init__(self)
+        self.start()
 
-ws = root.winfo_screenwidth()  # width of the screen
-hs = root.winfo_screenheight()  # height of the screen
+    def callback(self):
+        self.root.quit()
 
-root.geometry('%dx%d+%d+%d' % (screen_width, screen_height, 0, hs - 105))
+    def run(self):
+        self.root = tk.Tk()
+        self.root.overrideredirect(True)
+        # self.root.lift()
+        self.root.wm_attributes("-topmost", True)
+        # self.root.wm_attributes("-disabled", True)
+        self.root.wm_attributes("-transparentcolor", "white")
+        self.root.attributes("-alpha", 0.9)
+        #
+        # self.root.attributes('-fullscreen', False)
+        self.root.resizable(width=False, height=False)
+        #
+        screen_width = int(self.root.winfo_screenwidth() * 1.0)
+        screen_height = 65  # int(self.root.winfo_screenheight() * .06)
+
+        ws = self.root.winfo_screenwidth()  # width of the screen
+        hs = self.root.winfo_screenheight()  # height of the screen
+
+        self.root.geometry('%dx%d+%d+%d' % (screen_width, screen_height, 0, hs - 105))
+
+        self.root.mainloop()
+
+
+global app
+app = App()
 
 global current_sentence, current_bangla_sentence
 current_sentence = ""
