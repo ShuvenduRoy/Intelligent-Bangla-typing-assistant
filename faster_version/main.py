@@ -1,10 +1,12 @@
 import pyHook, pythoncom
+import pyautogui
+import pyperclip
 from pyHook import HookConstants, GetKeyState
 import keyboard
 import threading
 import tkinter as tk
 
-from faster_version.global_initializer import current_word, app, do_process_key
+from faster_version.global_initializer import current_word, app, do_process_key, del_current_word
 
 global suggestions
 suggestions = ['suggestions' + str(i) for i in range(8)]
@@ -14,25 +16,18 @@ def OnKeyboardEvent(event):
     if not do_process_key:
         return True
 
-    print(event.Key)
     for i in range(8):
         if GetKeyState(HookConstants.VKeyToID('VK_CONTROL')) and HookConstants.IDToName(event.KeyID) == str(i):
             print("Ctrl " + str(i) + " pressed")
 
-            global disabled
-            disabled = True
-            # del_current_word(current_word)
+            global do_process_key
+            do_process_key = False
 
-            # for j in range(8):
-            #     print('$'+suggestions[j]+'$')
+            del_current_word(current_word)
+            pyperclip.copy(suggestions[i])
+            pyautogui.hotkey("ctrl", "v")
 
-            global suggestions
-            # print_on("", suggestions[i] + ' ')
-            # print(suggestions[i])
-
-            disabled = False
-
-            # TODO handle ctrl+num
+            do_process_key = True
             return True
 
     if True:

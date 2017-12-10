@@ -133,28 +133,28 @@ do_process_key = True
 
 # TODO test this
 def myfunc(item):
-    # del_current_word(current_word)
+    del_current_word(current_word)
 
     global do_process_key
-    # do_process_key = False
-    # keyboard.write(item)
+    do_process_key = False
+
     pyperclip.copy(item)
     pyautogui.hotkey("ctrl", "v")
-    # do_process_key = True
+
+    do_process_key = True
 
     print(item)
 
 
 # TODO test this
 def del_current_word(current_word):
-    global disabled, do_process_key
-    disabled = True
+    global do_process_key
     do_process_key = False
 
     n = len(current_word)
     for i in range(n):
-        # pyautogui.typewrite(['backspace'])
         keyboard.press_and_release('backspace')
+    do_process_key = True
 
 # global saved_args, chars, vocab, model, saver, ckpt
 #
