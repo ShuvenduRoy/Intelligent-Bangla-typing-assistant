@@ -99,3 +99,5 @@ ENV/
 data.npy
 vocab.pkl
 test.py
+docs/
+faster_version/data/
