@@ -102,3 +102,4 @@ test.py
 docs/
 faster_version/data/
 data/english/text8
+data/bangla_wiki/bnwiki-20170101-pages-articles.xml
