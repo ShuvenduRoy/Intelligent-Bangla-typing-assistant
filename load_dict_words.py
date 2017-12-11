@@ -46,10 +46,7 @@ def bangla_word_search(start):
 
 
 def load_bangla_to_english_dict():
-    global b2e
     b2e = {}
-
-    count = 0
 
     data = open('data/b2e/proces_bangla_dict.txt', 'r', encoding="utf-8")
     for line in data:
@@ -60,6 +57,8 @@ def load_bangla_to_english_dict():
         line2 = line2[:-1]
 
         b2e[line] = line2
+
+    return b2e
 
 
 if __name__ == '__main__':

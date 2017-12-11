@@ -130,6 +130,11 @@ prev_char = ""
 global do_process_key
 do_process_key = True
 
+# load bangla dict
+from load_dict_words import load_bangla_to_english_dict
+global e2b
+e2b = load_bangla_to_english_dict()
+
 
 def process_bangla(s):
     import re
@@ -168,7 +173,7 @@ global saved_args, chars, vocab, model, saver, ckpt
 
 # path for models
 global bangla_model_path, english_model_path
-bangla_model_path = "save/bangla"
+bangla_model_path = "save/bangla_wiki"
 english_model_path = "save/english"
 
 saved_model_path = bangla_model_path if enabled_language == "bangla" else english_model_path

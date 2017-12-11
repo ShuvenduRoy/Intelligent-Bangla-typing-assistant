@@ -45,6 +45,16 @@ def bangla_word_search(start):
     return words_with_start
 
 
+def get_clipboard_data():
+    import win32clipboard
+
+    win32clipboard.OpenClipboard()
+    data = win32clipboard.GetClipboardData()
+    win32clipboard.CloseClipboard()
+
+    return data
+
+
 if __name__ == '__main__':
     print(english_word_search('kf'))
     print(bangla_word_search('ব'))
