@@ -62,7 +62,6 @@ def load_bangla_to_english_dict():
         b2e[line] = line2
 
 
-
 if __name__ == '__main__':
     # print(english_word_search('kf'))
     # print(bangla_word_search('ব'))
