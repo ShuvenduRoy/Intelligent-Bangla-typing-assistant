@@ -211,6 +211,10 @@ def OnKeyboardEvent(event):
             # print("Ctrl " + event.Key + " pressed")
 
             english_word = get_clipboard_data()
+
+            if english_word[-1] == ' ':
+                english_word = english_word[:-1]
+
             print(english_word)
             if english_word in b2e.keys():
                 bangla_word = b2e[english_word]

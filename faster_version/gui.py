@@ -13,8 +13,9 @@ class meaning(threading.Thread):
 
     def run(self):
         self.root = tk.Tk()
-        self.button = tk.Button(self.root, text=self.bangla)
-        self.button.pack()
+        self.label = tk.Label(self.root, text=self.bangla)
+        self.label.config(font=("Courier", 30))
+        self.label.pack()
 
         self.root.mainloop()
 
