@@ -89,7 +89,7 @@ def process_keypress(last_char):
     last_char = str.lower(last_char)
     global current_word, current_bangla_word, current_bangla_sentence, current_sentence, prev_char
 
-    if last_char == 'oem_period' or last_char == 'return' or last_char == '?':
+    if last_char == 'return':
         if enabled_language == "bangla":
             current_bangla_sentence = BanglaPhoneticParser.parse(current_sentence)
             database_handler.insert_sentence(current_bangla_sentence)
@@ -114,7 +114,7 @@ def process_keypress(last_char):
             current_bangla_word = ""
 
     # Detect end of word
-    elif last_char == 'space':
+    elif last_char == 'oem_period' or last_char == '?' or last_char == 'space':
         if enabled_language == "bangla":
             current_bangla_sentence = BanglaPhoneticParser.parse(current_sentence)
             current_bangla_word = BanglaPhoneticParser.parse(current_word)
