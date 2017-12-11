@@ -168,7 +168,7 @@ global saved_args, chars, vocab, model, saver, ckpt
 
 # path for models
 global bangla_model_path, english_model_path
-bangla_model_path = "save/bangla_wiki"
+bangla_model_path = "save/bangla"
 english_model_path = "save/english"
 
 saved_model_path = bangla_model_path if enabled_language == "bangla" else english_model_path
