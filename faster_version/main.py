@@ -11,6 +11,8 @@ import time
 from Database import database_handler
 from faster_version.global_initializer import *
 from helper_functions import *
+from faster_version.helper_functions import get_clipboard_data
+from faster_version.gui import meaning
 
 global suggestions
 suggestions = ['suggestions' + str(i) for i in range(8)]
@@ -32,6 +34,13 @@ class BackSpace(threading.Thread):
         keyboard.press_and_release('backspace')
         keyboard.press_and_release('space')
         do_process_key = True
+
+
+# load bangla dict
+from load_dict_words import load_bangla_to_english_dict
+
+global b2e
+b2e = load_bangla_to_english_dict()
 
 
 def predict_with_lstm(current_sentence):
@@ -196,16 +205,28 @@ def OnKeyboardEvent(event):
 
             return True
 
+    if event.Key == 'C':
+        # if GetKeyState(HookConstants.VKeyToID('VK_CONTROL')) and HookConstants.IDToName(event.KeyID) == str(i):
+        if prev_char == 'lcontrol':
+            # print("Ctrl " + event.Key + " pressed")
+
+            english_word = get_clipboard_data()
+            print(english_word)
+            if english_word in b2e.keys():
+                bangla_word = b2e[english_word]
+                print("$$Dictionary data", bangla_word)
+
+                meaning_window = meaning(bangla_word)
+
     if True:
-        print("prev key", prev_char)
-        print(event.Key)
+        # print(event.Key)
         process_keypress(event.Key)
 
     # debug stuff
-    print("current word: ", current_word)
-    print("current bangla word ", current_bangla_word)
-    print("current sentence ", current_sentence)
-    print("current bangla sentence ", current_bangla_sentence)
+    # print("current word: ", current_word)
+    # print("current bangla word ", current_bangla_word)
+    # print("current sentence ", current_sentence)
+    # print("current bangla sentence ", current_bangla_sentence)
     print()
 
     app.updateGui(suggestions)
