@@ -135,9 +135,10 @@ def process_keypress(last_char):
             current_bangla_word = BanglaPhoneticParser.parse(current_word)
 
             myfunc(current_bangla_word)
-
+            current_sentence = re.sub('[a-zA-Z0-9<>।"/?+!৩২৫৪৯৮৬০৭১_,.=@#$%^&*(){}\[\]]+', '', current_sentence)
             predict_with_lstm(current_bangla_sentence)
         else:
+            current_sentence = re.sub('[0-9<>।"/?+!৩২৫৪৯৮৬০৭১_,.=@#$%^&*(){}\[\]]+', '', current_sentence)
             predict_with_lstm(current_sentence.lower())
             pass
 
