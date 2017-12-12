@@ -33,7 +33,7 @@ class App(threading.Thread):
         self.root.wm_attributes("-topmost", True)
         # self.root.wm_attributes("-disabled", True)
         self.root.wm_attributes("-transparentcolor", "white")
-        self.root.attributes("-alpha", 0.8)
+        self.root.attributes("-alpha", 0.9)
         #
         # self.root.attributes('-fullscreen', False)
         self.root.resizable(width=False, height=False)
@@ -44,7 +44,7 @@ class App(threading.Thread):
         ws = self.root.winfo_screenwidth()  # width of the screen
         hs = self.root.winfo_screenheight()  # height of the screen
 
-        self.root.geometry('%dx%d+%d+%d' % (screen_width, screen_height, 0, hs - 105))
+        self.root.geometry('%dx%d+%d+%d' % (screen_width, screen_height, 0, hs - 110))
 
         fm = Frame(self.root)
         self.buttonList[8] = Button(fm, text=self.inputList[8],
@@ -119,6 +119,9 @@ class App(threading.Thread):
         self.buttonList[7].pack(side=LEFT)
         self.buttonList[7].bind("<Return>", lambda x: myfunc(self.inputList[7]))
         fm2.pack(side=TOP)
+
+        for i in range(len(self.buttonList)):
+            self.buttonList[i].config(font=("Courier", 13))
 
         self.root.mainloop()
 
