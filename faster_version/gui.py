@@ -13,6 +13,7 @@ class meaning(threading.Thread):
 
     def run(self):
         self.root = tk.Tk()
+        self.root.wm_attributes("-topmost", True)
         self.label = tk.Label(self.root, text=self.bangla)
         self.label.config(font=("Courier", 30))
         self.label.pack()
