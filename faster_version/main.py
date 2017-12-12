@@ -14,8 +14,13 @@ from helper_functions import *
 from faster_version.helper_functions import get_clipboard_data
 from faster_version.gui import meaning
 
+
 global suggestions
 suggestions = ['suggestions' + str(i) for i in range(10)]
+
+global user_words
+user_words = []
+from faster_version.screen_data import Screen_analyser
 
 
 class BackSpace(threading.Thread):
@@ -192,6 +197,9 @@ def OnKeyboardEvent(event):
 
         suggestions[8] = suggestion_1
         suggestions[9] = suggestion_2
+
+    if event.Key == 'End':
+        sa = Screen_analyser()
 
     if '0' <= event.Key <= '9':
         # if GetKeyState(HookConstants.VKeyToID('VK_CONTROL')) and HookConstants.IDToName(event.KeyID) == str(i):
