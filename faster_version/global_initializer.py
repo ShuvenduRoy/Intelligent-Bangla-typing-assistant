@@ -39,7 +39,7 @@ class App(threading.Thread):
         self.root.resizable(width=False, height=False)
         #
         screen_width = int(self.root.winfo_screenwidth() * 1.0)
-        screen_height = 65  # int(self.root.winfo_screenheight() * .06)
+        screen_height = 70  # int(self.root.winfo_screenheight() * .06)
 
         ws = self.root.winfo_screenwidth()  # width of the screen
         hs = self.root.winfo_screenheight()  # height of the screen
