@@ -212,7 +212,7 @@ def OnKeyboardEvent(event):
 
             return True
 
-    if event.Key == 'C':
+    if event.Key == 'V':
         # if GetKeyState(HookConstants.VKeyToID('VK_CONTROL')) and HookConstants.IDToName(event.KeyID) == str(i):
         if prev_char == 'lcontrol':
             # print("Ctrl " + event.Key + " pressed")
