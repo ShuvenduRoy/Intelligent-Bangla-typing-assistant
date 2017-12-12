@@ -11,8 +11,7 @@ from model import Model
 from tkinter import *
 
 # initialize with one language
-global enabled_language
-enabled_language = "bangla"
+from faster_version.user_settings.load_global_gettings import *
 
 
 class App(threading.Thread):

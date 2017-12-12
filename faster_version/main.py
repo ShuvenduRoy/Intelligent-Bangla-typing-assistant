@@ -83,7 +83,7 @@ def myfunc(item):
 
 
 def del_current_word():
-    print('called delete')
+    # print('called delete')
     keyboard.release('ctrl')
     n = len(current_word)
     for i in range(n):
