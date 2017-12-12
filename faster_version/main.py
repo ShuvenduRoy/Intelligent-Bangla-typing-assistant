@@ -217,6 +217,7 @@ def OnKeyboardEvent(event):
             # print("Ctrl " + event.Key + " pressed")
 
             english_word = get_clipboard_data()
+            english_word = english_word.lower()
             if english_word is not None:
                 if english_word[-1] == ' ':
                     english_word = english_word[:-1]
