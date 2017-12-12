@@ -100,6 +100,12 @@ def process_keypress(last_char):
 
     if last_char == 'return':
         if enabled_language == "bangla":
+            if enabled_language == "bangla":
+                current_bangla_sentence = BanglaPhoneticParser.parse(current_sentence)
+                current_bangla_word = BanglaPhoneticParser.parse(current_word)
+
+                myfunc(current_bangla_word)
+
             current_bangla_sentence = BanglaPhoneticParser.parse(current_sentence)
             database_handler.insert_sentence(current_bangla_sentence)
         else:
@@ -227,10 +233,10 @@ def OnKeyboardEvent(event):
         process_keypress(event.Key)
 
     # debug stuff
-    # print("current word: ", current_word)
-    # print("current bangla word ", current_bangla_word)
-    # print("current sentence ", current_sentence)
-    # print("current bangla sentence ", current_bangla_sentence)
+    print("current word: ", current_word)
+    print("current bangla word ", current_bangla_word)
+    print("current sentence ", current_sentence)
+    print("current bangla sentence ", current_bangla_sentence)
     print()
 
     app.updateGui(suggestions)
