@@ -211,16 +211,16 @@ def OnKeyboardEvent(event):
             # print("Ctrl " + event.Key + " pressed")
 
             english_word = get_clipboard_data()
+            if english_word is not None:
+                if english_word[-1] == ' ':
+                    english_word = english_word[:-1]
 
-            if english_word[-1] == ' ':
-                english_word = english_word[:-1]
+                print(english_word)
+                if english_word in b2e.keys():
+                    bangla_word = b2e[english_word]
+                    print("$$Dictionary data", bangla_word)
 
-            print(english_word)
-            if english_word in b2e.keys():
-                bangla_word = b2e[english_word]
-                print("$$Dictionary data", bangla_word)
-
-                meaning_window = meaning(bangla_word)
+                    meaning_window = meaning(bangla_word)
 
     if True:
         # print(event.Key)

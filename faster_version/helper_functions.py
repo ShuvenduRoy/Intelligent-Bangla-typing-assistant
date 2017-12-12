@@ -49,7 +49,11 @@ def get_clipboard_data():
     import win32clipboard
 
     win32clipboard.OpenClipboard()
-    data = win32clipboard.GetClipboardData()
+    try:
+        data = win32clipboard.GetClipboardData()
+    except:
+        data = None
+
     win32clipboard.CloseClipboard()
 
     return data
@@ -58,3 +62,4 @@ def get_clipboard_data():
 if __name__ == '__main__':
     print(english_word_search('kf'))
     print(bangla_word_search('ব'))
+    print(get_clipboard_data())
