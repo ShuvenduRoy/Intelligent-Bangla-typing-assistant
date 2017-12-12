@@ -138,7 +138,7 @@ def process_keypress(last_char):
 
             predict_with_lstm(current_bangla_sentence)
         else:
-            predict_with_lstm(current_sentence)
+            predict_with_lstm(current_sentence.lower())
             pass
 
         current_word = ""
