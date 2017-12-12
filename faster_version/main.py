@@ -15,7 +15,7 @@ from faster_version.helper_functions import get_clipboard_data
 from faster_version.gui import meaning
 
 global suggestions
-suggestions = ['suggestions' + str(i) for i in range(8)]
+suggestions = ['suggestions' + str(i) for i in range(10)]
 
 
 class BackSpace(threading.Thread):
@@ -64,8 +64,8 @@ def predict_with_lstm(current_sentence):
     suggestion_1 = ' '.join(suggest_sentence[0: index_of_suggestion_sentence + 1])
     suggestion_2 = ' '.join(suggest_sentence[index_of_suggestion_sentence + 1: 7])
 
-    suggestions[6] = suggestion_1
-    suggestions[7] = suggestion_2
+    suggestions[8] = suggestion_1
+    suggestions[9] = suggestion_2
 
 
 def myfunc(item):
@@ -181,12 +181,12 @@ def OnKeyboardEvent(event):
         index_of_suggestion_sentence += 1
 
         suggestion_1 = ' '.join(suggest_sentence[0: index_of_suggestion_sentence + 1])
-        suggestion_2 = ' '.join(suggest_sentence[index_of_suggestion_sentence + 1: 7])
+        suggestion_2 = ' '.join(suggest_sentence[index_of_suggestion_sentence + 1: 9])
 
-        suggestions[6] = suggestion_1
-        suggestions[7] = suggestion_2
+        suggestions[8] = suggestion_1
+        suggestions[9] = suggestion_2
 
-    if '0' <= event.Key <= '7':
+    if '0' <= event.Key <= '9':
         # if GetKeyState(HookConstants.VKeyToID('VK_CONTROL')) and HookConstants.IDToName(event.KeyID) == str(i):
         if prev_char == 'lcontrol':
             print("Ctrl " + event.Key + " pressed")

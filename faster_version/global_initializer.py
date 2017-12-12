@@ -25,7 +25,7 @@ class App(threading.Thread):
 
     def run(self):
         self.root = tk.Tk()
-        self.inputList = ["position " + str(i) for i in range(8)]
+        self.inputList = ["position " + str(i) for i in range(10)]
         self.buttonList = [None] * (len(self.inputList))
 
         self.root.overrideredirect(True)
@@ -47,19 +47,19 @@ class App(threading.Thread):
         self.root.geometry('%dx%d+%d+%d' % (screen_width, screen_height, 0, hs - 105))
 
         fm = Frame(self.root)
-        self.buttonList[6] = Button(fm, text=self.inputList[6],
-                                    command=lambda: myfunc(self.inputList[6]), bd=0,
+        self.buttonList[8] = Button(fm, text=self.inputList[8],
+                                    command=lambda: myfunc(self.inputList[8]), bd=0,
                                     activeforeground="blue",
                                     justify=LEFT, height=2, padx=10)
-        self.buttonList[6].pack(side=LEFT)
-        self.buttonList[6].bind("<Return>", lambda x: myfunc(self.inputList[6]))
+        self.buttonList[8].pack(side=LEFT)
+        self.buttonList[8].bind("<Return>", lambda x: myfunc(self.inputList[8]))
 
-        self.buttonList[7] = Button(fm, text=self.inputList[7],
-                                    command=lambda: myfunc(self.inputList[7]), bd=0,
+        self.buttonList[9] = Button(fm, text=self.inputList[9],
+                                    command=lambda: myfunc(self.inputList[9]), bd=0,
                                     activeforeground="blue",
                                     justify=LEFT, height=2, padx=10)
-        self.buttonList[7].pack(side=LEFT)
-        self.buttonList[7].bind("<Return>", lambda x: myfunc(self.inputList[7]))
+        self.buttonList[9].pack(side=LEFT)
+        self.buttonList[9].bind("<Return>", lambda x: myfunc(self.inputList[9]))
         fm.pack(side=TOP)
 
         fm2 = Frame(self.root)
@@ -98,12 +98,26 @@ class App(threading.Thread):
         self.buttonList[4].pack(side=LEFT)
         self.buttonList[4].bind("<Return>", lambda x: myfunc(self.inputList[4]))
 
-        self.buttonList[5] = Button(fm2, text=self.inputList[4], command=lambda: myfunc(self.inputList[5]),
+        self.buttonList[5] = Button(fm2, text=self.inputList[5], command=lambda: myfunc(self.inputList[5]),
                                     bd=0,
                                     activeforeground="blue",
                                     justify=LEFT, width=10, height=2, padx=10)
         self.buttonList[5].pack(side=LEFT)
         self.buttonList[5].bind("<Return>", lambda x: myfunc(self.inputList[5]))
+
+        self.buttonList[6] = Button(fm2, text=self.inputList[6], command=lambda: myfunc(self.inputList[6]),
+                                    bd=0,
+                                    activeforeground="blue",
+                                    justify=LEFT, width=10, height=2, padx=10)
+        self.buttonList[6].pack(side=LEFT)
+        self.buttonList[6].bind("<Return>", lambda x: myfunc(self.inputList[6]))
+
+        self.buttonList[7] = Button(fm2, text=self.inputList[7], command=lambda: myfunc(self.inputList[7]),
+                                    bd=0,
+                                    activeforeground="blue",
+                                    justify=LEFT, width=10, height=2, padx=10)
+        self.buttonList[7].pack(side=LEFT)
+        self.buttonList[7].bind("<Return>", lambda x: myfunc(self.inputList[7]))
         fm2.pack(side=TOP)
 
         self.root.mainloop()

@@ -16,14 +16,14 @@ def english_word_search(start):
         if word.startswith(start):
             words_with_start.append(word)
 
-            if len(words_with_start) == 5:
+            if len(words_with_start) == 7:
                 return words_with_start
 
     for word in eng_words:
         if start in word:
             words_with_start.append(word)
 
-            if len(words_with_start) == 5:
+            if len(words_with_start) == 7:
                 return words_with_start
 
     return words_with_start
@@ -48,13 +48,13 @@ def bangla_word_search(start):
         if word.startswith(start) and word != start:
             words_with_start.append(word[:-1])
 
-            if len(words_with_start) == 5:
+            if len(words_with_start) == 7:
                 return words_with_start
     for word in bangla_words:
         if start in word:
             words_with_start.append(word[:-1])
 
-            if len(words_with_start) == 5:
+            if len(words_with_start) == 7:
                 return words_with_start
 
     return words_with_start
