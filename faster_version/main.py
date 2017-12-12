@@ -7,6 +7,16 @@ import keyboard
 import threading
 import tkinter as tk
 import time
+import threading
+import pyscreenshot as ImageGrab
+import re
+
+try:
+    import Image
+except ImportError:
+    from PIL import Image
+import pytesseract
+
 
 from Database import database_handler
 from faster_version.global_initializer import *
@@ -18,9 +28,11 @@ from faster_version.gui import meaning
 global suggestions
 suggestions = ['suggestions' + str(i) for i in range(10)]
 
-global user_words
-user_words = []
-from faster_version.screen_data import Screen_analyser
+if 'user_words' not in globals():
+    global user_words
+    user_words = []
+
+# from faster_version.screen_data import Screen_analyser
 
 
 class BackSpace(threading.Thread):
@@ -141,9 +153,11 @@ def process_keypress(last_char):
 
             myfunc(current_bangla_word)
             current_sentence = re.sub('[a-zA-Z0-9<>।"/?+!৩২৫৪৯৮৬০৭১_,.=@#$%^&*(){}\[\]]+', '', current_sentence)
+            user_words.append(current_bangla_word)
             predict_with_lstm(current_bangla_sentence)
         else:
             current_sentence = re.sub('[0-9<>।"/?+!৩২৫৪৯৮৬০৭১_,.=@#$%^&*(){}\[\]]+', '', current_sentence)
+            user_words.append(current_word)
             predict_with_lstm(current_sentence.lower())
             pass
 
@@ -199,7 +213,13 @@ def OnKeyboardEvent(event):
         suggestions[9] = suggestion_2
 
     if event.Key == 'End':
-        sa = Screen_analyser()
+        print('end')
+        import os
+        os.system('python screen_data.py')
+
+        # sa = Screen_analyser()
+        from faster_version.screen_data import def_image_data
+        user_words.extend(def_image_data())
 
     if '0' <= event.Key <= '9':
         # if GetKeyState(HookConstants.VKeyToID('VK_CONTROL')) and HookConstants.IDToName(event.KeyID) == str(i):
@@ -243,10 +263,10 @@ def OnKeyboardEvent(event):
         process_keypress(event.Key)
 
     # debug stuff
-    print("current word: ", current_word)
-    print("current bangla word ", current_bangla_word)
-    print("current sentence ", current_sentence)
-    print("current bangla sentence ", current_bangla_sentence)
+    # print("current word: ", current_word)
+    # print("current bangla word ", current_bangla_word)
+    # print("current sentence ", current_sentence)
+    # print("current bangla sentence ", current_bangla_sentence)
     print()
 
     app.updateGui(suggestions)

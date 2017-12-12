@@ -3,6 +3,11 @@ def load_english_word():
 
     global eng_words
     eng_words = []
+
+    if 'user_words' in globals():
+        global user_words
+        eng_words.extend(user_words)
+
     for line in file:
         eng_words.append(line.split(" ")[0])
 
@@ -35,6 +40,11 @@ def load_bangla_word():
 
     global bangla_words
     bangla_words = []
+
+    if 'user_words' in globals():
+        global user_words
+        bangla_words.extend(user_words)
+
     for line in file:
         bangla_words.append(line.split(" ")[0])
 
