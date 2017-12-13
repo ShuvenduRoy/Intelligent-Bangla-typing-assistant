@@ -1,0 +1,2 @@
+enabled_language english
+dictionary yes
