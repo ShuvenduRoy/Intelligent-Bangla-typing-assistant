@@ -175,6 +175,7 @@ def process_keypress(last_char):
         current_word = ""
         current_bangla_word = ""
         current_sentence += " "
+        return
 
         # escape other keypress
     elif len(last_char) > 1:

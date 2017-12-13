@@ -1,2 +1,2 @@
-enabled_language bangla
+enabled_language english
 dictionary yes

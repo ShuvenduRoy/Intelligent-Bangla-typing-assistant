@@ -6,10 +6,13 @@ def load_user_history_word():
     
     for line in file:
         if line[-1] == '\n' or line[-1] == ' ':
-            line = line[:-1
-                   ]
-        user_words_old.append(line.split(' ')[0])
-        user_words_old = user_words_old[::-1]
+            line = line[:-1]
+
+        word = line.split(' ')[0]
+        if word not in user_words_old:
+            user_words_old.append(word)
+
+    user_words_old = user_words_old[::-1]
 
     return user_words_old
 
@@ -63,6 +66,8 @@ def load_bangla_word():
 
     for line in file:
         bangla_words.append(line.split(" ")[0])
+
+    print('bangla', bangla_words[100])
 
 
 def bangla_word_search(start):
