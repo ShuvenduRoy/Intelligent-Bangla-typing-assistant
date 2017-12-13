@@ -1,8 +1,24 @@
+def load_user_history_word():
+    import io
+    file = io.open("data/user_words.txt", mode="r", encoding="utf-8")
+
+    user_words_old = []
+    
+    for line in file:
+        if line[-1] == '\n' or line[-1] == ' ':
+            line = line[:-1
+                   ]
+        user_words_old.append(line.split(' ')[0])
+        user_words_old = user_words_old[::-1]
+
+    return user_words_old
+
+
 def load_english_word():
     file = open('data/eng_word_count.txt')
 
     global eng_words
-    eng_words = []
+    eng_words = load_user_history_word()
 
     if 'user_words' in globals():
         global user_words
@@ -39,7 +55,7 @@ def load_bangla_word():
     file = io.open("data/bangla_word_freq_count.txt", mode="r", encoding="utf-8")
 
     global bangla_words
-    bangla_words = []
+    bangla_words = load_user_history_word()
 
     if 'user_words' in globals():
         global user_words
@@ -88,3 +104,4 @@ if __name__ == '__main__':
     print(english_word_search('kf'))
     print(bangla_word_search('ব'))
     print(get_clipboard_data())
+    load_user_history_word()

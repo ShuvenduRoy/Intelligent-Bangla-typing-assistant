@@ -22,6 +22,7 @@ from Database import database_handler
 from faster_version.global_initializer import *
 from helper_functions import *
 from faster_version.helper_functions import get_clipboard_data
+from faster_version.helper_functions import load_user_history_word
 from faster_version.gui import meaning
 
 
@@ -128,6 +129,13 @@ def process_keypress(last_char):
         else:
             database_handler.insert_sentence(current_sentence)
 
+        # save users words
+        with open('data/user_words.txt', 'a', encoding='utf8') as f:
+            print(user_words)
+
+            for i in range(len(user_words)):
+                f.write(user_words[i]+'\n')
+
         current_sentence = ""
         current_bangla_sentence = ""
         current_word = ""
@@ -150,11 +158,14 @@ def process_keypress(last_char):
         if enabled_language == "bangla":
             current_bangla_sentence = BanglaPhoneticParser.parse(current_sentence)
             current_bangla_word = BanglaPhoneticParser.parse(current_word)
+            user_words.append(str(current_bangla_word))
 
             myfunc(current_bangla_word)
             current_sentence = re.sub('[a-zA-Z0-9<>।"/?+!৩২৫৪৯৮৬০৭১_,.=@#$%^&*(){}\[\]]+', '', current_sentence)
-            user_words.append(current_bangla_word)
+
             predict_with_lstm(current_bangla_sentence)
+
+
         else:
             current_sentence = re.sub('[0-9<>।"/?+!৩২৫৪৯৮৬০৭১_,.=@#$%^&*(){}\[\]]+', '', current_sentence)
             user_words.append(current_word)
@@ -267,7 +278,7 @@ def OnKeyboardEvent(event):
     # print("current bangla word ", current_bangla_word)
     # print("current sentence ", current_sentence)
     # print("current bangla sentence ", current_bangla_sentence)
-    print()
+    print(user_words)
 
     app.updateGui(suggestions)
     return True
